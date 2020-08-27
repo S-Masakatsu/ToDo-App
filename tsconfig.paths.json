@@ -2,7 +2,10 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@css/*": ["./assets/css/*"]
+      "@components/*": ["./components/*"],
+      "@css/*":        ["./assets/css/*"],
+      "@entity/*":     ["./domain/entity/*"],
+      "@redux/*":      ["./redux/*"]
     }
   }
 }
