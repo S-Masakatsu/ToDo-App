@@ -1,7 +1,6 @@
 import {Task} from '@entity/task'
 
-export type Log = {
-  task:       Task,   // ID, Title
+export type Log = Task & {
   operatedAt: string  // 操作時刻
 }
 

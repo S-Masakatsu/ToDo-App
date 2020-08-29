@@ -1,5 +1,10 @@
-import Home from './Home'
+import {CalendarScreen} from './CalendarScreen'
+import {HomeScreen}     from './HomeScreen'
+import {LogScreen}      from './LogScreen'
 
-export default {
-  Home
+
+export {
+  CalendarScreen,
+  HomeScreen,
+  LogScreen,
 }

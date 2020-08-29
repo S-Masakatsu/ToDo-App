@@ -3,11 +3,21 @@
  * ルーティング（画面遷移）
  */
 import React from 'react'
-import {BrowserRouter, Route} from 'react-router-dom'
+import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import {Provider} from 'react-redux'
 
 // Screens
-import Home from '@components/screens/Home'
+import {
+  HomeScreen,
+  CalendarScreen,
+  LogScreen
+} from '@screens'
+
+// Object
+import {HeaderNav} from '@domain/object'
+
+// Services
+import {PATH_PAGES} from '@services/pages'
 
 // Store
 import store from '@redux/store'
@@ -15,7 +25,12 @@ import store from '@redux/store'
 export default () => (
   <Provider store={store}>
     <BrowserRouter>
-      <Route exact path='/' component={Home} />
+      <HeaderNav />
+      <Switch>
+        <Route path={PATH_PAGES.HOME}     component={HomeScreen} exact />
+        <Route path={PATH_PAGES.CALENDAR} component={CalendarScreen} />
+        <Route path={PATH_PAGES.LOG}      component={LogScreen} />
+      </Switch>
     </BrowserRouter>
   </Provider>
 )

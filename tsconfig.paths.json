@@ -2,10 +2,18 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@components/*": ["./components/*"],
-      "@css/*":        ["./assets/css/*"],
-      "@entity/*":     ["./domain/entity/*"],
-      "@redux/*":      ["./redux/*"]
+      "@css/*":          ["./assets/css/*"],
+      "@components/*":   ["./components/*"],
+      "@screens":        ["./components/screens/index.ts"],
+      "@layouts":        ["./components/layouts/index.ts"],
+      "@domain/element": ["./components/domain/element/index.ts"],
+      "@domain/object":  ["./components/domain/object/index.ts"],
+      "@gui/groups":     ["./components/gui/groups/index.ts"],
+      "@gui/parts":      ["./components/gui/parts/index.ts"],
+      "@entity/*":       ["./domain/entity/*"],
+      "@services/*":     ["./domain/services/*"],
+      "@redux/*":        ["./redux/*"],
+      "@utils/*":        ["./utils"]
     }
   }
 }
