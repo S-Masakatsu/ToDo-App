@@ -1,6 +1,12 @@
 import {Task} from '@entity/task'
 
-export type Todo = Task & {
-  body: String,   // 詳細
-  done: boolean   // 完了したかどうか
+type TodoItem = Task & {
+  description: String,        // 説明
+  date:        string | null  // 日付
+  done:        boolean        // 完了したかどうか
+}
+
+export type Todo = {
+  todo:         TodoItem[],
+  isDialogOpen: boolean
 }

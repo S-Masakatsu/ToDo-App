@@ -71,6 +71,9 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       marginRight: -drawerWidth,
     },
+    icon: {
+      minWidth: '45px'
+    },
   }),
 )
 
@@ -166,19 +169,18 @@ interface ListItemProps {
 }
 
 const ListItemLink:React.FC<ListItemProps> = ({icon, primary, to, onClick}) => {
-  const CustomLink = useMemo(
-    () =>
-      forwardRef(linkProps => (
-        <Link to={to} {...linkProps} />
-    )),
-    [to]
-  )
+  const classes = useStyles()
+  const CustomLink = useMemo(() =>
+    forwardRef(linkProps => (
+      <Link to={to} {...linkProps} />
+    )
+  ),[to])
 
   return (
     <div onClick={onClick}>
       <ListItem button component={CustomLink}>
-          <ListItemIcon>{icon}</ListItemIcon>
-          <ListItemText primary={primary} />
+        <ListItemIcon className={classes.icon}>{icon}</ListItemIcon>
+        <ListItemText primary={primary} />
       </ListItem>
     </div>
   )

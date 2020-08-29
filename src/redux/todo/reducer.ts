@@ -5,11 +5,12 @@ import Action from './actions'
 // --------------------------------------------------------------------
 
 // Entity -------------------------------------------------------------
-import {Todos} from '@entity/todo'
+import {Todo} from '@entity/todo'
 // --------------------------------------------------------------------
 
-const init: Todos = {
-  todo: []
+const init: Todo = {
+  todo: [],
+  isDialogOpen: false
 }
 
 export default reducerWithInitialState(init)
