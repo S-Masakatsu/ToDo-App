@@ -46,6 +46,7 @@ const StyledDiv = styled.div`
   top: 50%;
   left: 50%;
   margin: 0 auto;
+  border-radius: 8px;
   transform: translate(-50%,-50%);
   border: 8px solid #fff;
   background-color: #fff;
