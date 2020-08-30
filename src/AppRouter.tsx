@@ -13,8 +13,8 @@ import {
   LogScreen
 } from '@screens'
 
-// Object
-import {HeaderNav} from '@domain/object'
+// Element
+import {HeaderNav} from '@domain/element'
 
 // Services
 import {PATH_PAGES} from '@services/pages'

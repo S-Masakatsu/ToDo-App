@@ -1,6 +1,6 @@
 /**
  * ヘッダーナビゲーション
- * Navigation Domain Object Component
+ * HeaderNav Domain Element Component
  */
 import React from 'react'
 

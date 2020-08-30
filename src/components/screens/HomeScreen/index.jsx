@@ -6,9 +6,10 @@ import React from 'react'
 
 // Components
 import {ScreenWrapper} from '@gui/parts'
+import {TodoForm} from '@domain/object'
 
 export const HomeScreen = () => (
   <ScreenWrapper>
-    <h1>Todo</h1>
+    <TodoForm />
   </ScreenWrapper>
 )
