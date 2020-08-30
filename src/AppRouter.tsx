@@ -16,6 +16,9 @@ import {
 // Element
 import {HeaderNav} from '@domain/element'
 
+// Utils
+import Page from '@utils/Page'
+
 // Services
 import {PATH_PAGES} from '@services/pages'
 
@@ -27,9 +30,19 @@ export default () => (
     <BrowserRouter>
       <HeaderNav />
       <Switch>
-        <Route path={PATH_PAGES.HOME}     component={HomeScreen} exact />
-        <Route path={PATH_PAGES.CALENDAR} component={CalendarScreen} />
-        <Route path={PATH_PAGES.LOG}      component={LogScreen} />
+        <Route
+          exact
+          path={PATH_PAGES.HOME}
+          render={() => <Page title='Todo' children={<HomeScreen />}/> }
+        />
+        <Route
+          path={PATH_PAGES.CALENDAR}
+          render={() => <Page title='カレンダー' children={<CalendarScreen />}/> }
+        />
+        <Route
+          path={PATH_PAGES.LOG}
+          render={() => <Page title='操作履歴' children={<LogScreen />}/> }
+        />
       </Switch>
     </BrowserRouter>
   </Provider>
