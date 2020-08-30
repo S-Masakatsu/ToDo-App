@@ -4,7 +4,7 @@ import AppRouter from './AppRouter'
 
 import * as serviceWorker from './serviceWorker'
 
-import '@css/_base.sass'
+import '@assets/css/_base.sass'
 
 ReactDOM.render(
   <React.StrictMode>

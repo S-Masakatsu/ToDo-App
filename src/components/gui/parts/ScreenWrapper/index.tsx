@@ -18,16 +18,14 @@ interface Props {
 }
 
 export const ScreenWrapper:React.FC<Props> = ({children}) => (
-  <>
-    <StyledMain>
-      <Layout
-        hasMargin={LAYOUT_OPTION.MARGIN}
-        hasPadding={LAYOUT_OPTION.PADDING}
-      >
-        {children}
-      </Layout>
-    </StyledMain>
-  </>
+  <StyledMain>
+    <Layout
+      hasMargin={LAYOUT_OPTION.MARGIN}
+      hasPadding={LAYOUT_OPTION.PADDING}
+    >
+      {children}
+    </Layout>
+  </StyledMain>
 )
 
 const NAV_BAR_HEIGHT = 72

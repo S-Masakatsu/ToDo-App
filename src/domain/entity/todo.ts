@@ -7,6 +7,5 @@ type TodoItem = Task & {
 }
 
 export type Todo = {
-  todo:         TodoItem[],
-  isDialogOpen: boolean
+  todo:         TodoItem[]
 }

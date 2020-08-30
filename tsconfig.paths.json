@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@css/*":          ["./assets/css/*"],
+      "@assets/*":       ["./assets/*"],
       "@components/*":   ["./components/*"],
       "@screens":        ["./components/screens/index.ts"],
       "@layouts":        ["./components/layouts/index.ts"],

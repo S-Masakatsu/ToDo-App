@@ -4,7 +4,7 @@ module.exports = function override(config, env) {
   config.resolve = {
     ...config.resolve,
     alias: {
-      '@css':            path.resolve(__dirname, './src/assets/css'),
+      '@assets':         path.resolve(__dirname, './src/assets'),
       // components
       '@components':     path.resolve(__dirname, './src/components'),
       '@screens':        path.resolve(__dirname, './src/components/screens/index.ts'),

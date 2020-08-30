@@ -9,8 +9,7 @@ import {Todo} from '@entity/todo'
 // --------------------------------------------------------------------
 
 const init: Todo = {
-  todo: [],
-  isDialogOpen: false
+  todo: []
 }
 
 export default reducerWithInitialState(init)

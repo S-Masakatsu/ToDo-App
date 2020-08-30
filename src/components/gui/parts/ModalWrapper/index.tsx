@@ -17,24 +17,25 @@ import Modal from '@material-ui/core/Modal'
 
 interface StyledProps {
   width?: String | Number
+  border?: boolean
 }
 
 interface Props extends StyledProps {
   children: React.ReactNode
   open: boolean
-  onClose: React.EffectCallback
+  onClose?: React.EffectCallback
   ariaLabelledby?: string
   ariaDescribedby?: string
 }
 
-export const ModalWrapper:React.FC<Props> = ({width, children, open, onClose, ariaLabelledby, ariaDescribedby}) => (
+export const ModalWrapper:React.FC<Props> = ({width, border, children, open, onClose, ariaLabelledby, ariaDescribedby}) => (
   <Modal
     {...{open, onClose}}
     aria-labelledby={ariaLabelledby || 'simple-modal-title'}
     aria-describedby={ariaDescribedby || 'simple-modal-description'}
     style={{zIndex: 99999}}
   >
-    <StyledDiv {...{width}}>
+    <StyledDiv {...{width, border}}>
       {children}
     </StyledDiv>
   </Modal>
@@ -48,11 +49,12 @@ const StyledDiv = styled.div`
   margin: 0 auto;
   border-radius: 8px;
   transform: translate(-50%,-50%);
-  border: 8px solid #fff;
+  ${(props: StyledProps) => props.border  ? `border: 8px solid #fff` : ''};
   background-color: #fff;
   box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2),
               0px 5px 8px 0px rgba(0,0,0,0.14),
               0px 1px 14px 0px rgba(0,0,0,0.12);
+  max-width: 450px;
   ${(props: StyledProps) => {
     if (!props.width) return `width: 335px`
     return `width: ${props.width}`;

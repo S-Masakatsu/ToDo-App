@@ -17,15 +17,17 @@ interface TopRightBottomLeft {
 
 interface StyledProps {
   hasPadding?: TopRightBottomLeft
+  padding?:    String
   hasMargin?:  TopRightBottomLeft
+  margin?:     String
 }
 
 interface Props extends StyledProps {
   children: React.ReactNode
 }
 
-export const Layout:React.FC<Props> = ({children, hasPadding, hasMargin}) => (
-  <StyledWrapper hasPadding={hasPadding} hasMargin={hasMargin}>
+export const Layout:React.FC<Props> = ({children, hasPadding, padding, hasMargin, margin}) => (
+  <StyledWrapper {...{hasPadding, padding, hasMargin, margin}}>
     {children}
   </StyledWrapper>
 )
@@ -43,11 +45,13 @@ const StyledWrapper = styled.div`
       margin-top:     ${getSpace(hasMargin.top)};
       margin-right:   ${getSpace(hasMargin.right)};
       margin-left:    ${getSpace(hasMargin.left)};
+      ${props.margin ? `margin: ${props.margin}` : ''};
 
       padding-bottom: ${getSpace(hasPadding.bottom)};
       padding-top:    ${getSpace(hasPadding.top)};
       padding-right:  ${getSpace(hasPadding.right)};
       padding-left:   ${getSpace(hasPadding.left)};
+      ${props.padding ? `padding: ${props.padding}` : ''};
     `
   }}
 `

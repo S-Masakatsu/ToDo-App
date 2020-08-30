@@ -5,6 +5,7 @@
 import React, {useState} from 'react'
 
 // Components
+import {Todo} from '@domain/element'
 import {ModalWrapper, OpenButton} from '@gui/parts'
 
 export const TodoForm = () => {
@@ -17,12 +18,11 @@ export const TodoForm = () => {
       <OpenButton onClick={handleOpen} />
       <ModalWrapper
         open={open}
-        onClose={handleClose}
-        width={`${window.outerWidth - 40}px`}
+        width={`${window.outerWidth * 0.9}px`}
         ariaLabelledby={'todo-registration-form'}
         ariaDescribedby={'todo-input-form'}
       >
-        <h1>Todo Input Form</h1>
+        <Todo onClose={handleClose} />
       </ModalWrapper>
     </>
   )
