@@ -25,19 +25,21 @@ import classes from './style.module.sass'
 interface Props {
   icon?: React.ReactNode
   label: string
+  name?: string
   defaultValue?: string
   placeholder?: string
   required?: boolean
   multiline?: boolean
+  inputRef?: any
   error?: boolean
   helperText?: string
 }
 
-export const TextField:React.SFC<Props> = ({icon, label, defaultValue, placeholder, required, multiline, error, helperText}) => (
+export const TextField:React.SFC<Props> = ({icon, label, name, defaultValue, placeholder, required, multiline, inputRef, error, helperText}) => (
   <LayoutFlex>
     {icon && <StyledDiv children={icon} />}
     <InputText
-      {...{label, defaultValue, required, multiline, error, helperText}}
+      {...{label, defaultValue, name, required, multiline, inputRef, error, helperText}}
       placeholder={placeholder || '入力してください...'}
       className={classes.txtAria}
     />

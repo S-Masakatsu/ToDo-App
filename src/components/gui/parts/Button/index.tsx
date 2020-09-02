@@ -12,12 +12,13 @@ import styled from "styled-components"
 import {mainColor} from '@assets/js/variables'
 
 interface Props {
-  label?: string
+  label?:    string
+  type?:     'button' | 'submit' | 'reset' | undefined
   disabled?: boolean
-  onClick?: (res: React.BaseSyntheticEvent) => void
+  onClick?:  (res: React.BaseSyntheticEvent) => void
 }
-export const Button:React.FC<Props> = ({label, onClick, disabled}) => (
-  <StyledButton {...{onClick, disabled}} >{label || "OK"}</StyledButton>
+export const Button:React.FC<Props> = ({label, type, onClick, disabled}) => (
+  <StyledButton {...{type, onClick, disabled}} >{label || "OK"}</StyledButton>
 )
 
 const StyledButton = styled.button`

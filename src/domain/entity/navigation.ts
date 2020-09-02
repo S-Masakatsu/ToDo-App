@@ -1,7 +1,7 @@
 import {ReactNode} from 'react'
 
 type Item = {
-  primary: String,    // ページタイトル
+  primary: string,    // ページタイトル
   icon:    ReactNode, // Icon
   to:      string,    // Link
 }

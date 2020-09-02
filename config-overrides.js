@@ -8,6 +8,7 @@ module.exports = function override(config, env) {
       // components
       '@components':     path.resolve(__dirname, './src/components'),
       '@screens':        path.resolve(__dirname, './src/components/screens/index.ts'),
+      '@containers':     path.resolve(__dirname, './src/components/containers/index.ts'),
       '@layouts':        path.resolve(__dirname, './src/components/layouts/index.ts'),
       '@domain/element': path.resolve(__dirname, './src/components/domain/element/index.ts'),
       '@domain/object':  path.resolve(__dirname, './src/components/domain/object/index.ts'),

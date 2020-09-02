@@ -26,12 +26,13 @@ import CloseIcon      from '@material-ui/icons/Close'
 
 // Constants
 const HEADING = 'ToDoを追加'
-const LABEL = 'を追加'
+const LABEL   = 'を追加'
 const ICONS = {
   DATE:        <AccessTimeIcon />,
   DESCRIPTION: <NotesIcon />,
 }
 
+// Form Header Component
 interface HeadingProps {
   onClose: React.EffectCallback
 }
@@ -61,19 +62,33 @@ const StyledButton = styled.button`
   border-radius: 50%;
 `
 
-
-interface Props {
-  onClose: React.EffectCallback
+// Form Component
+interface Form {
+  name:   string
+  ref:    any
+  error?: string
 }
 
-export const Todo:React.FC<Props> = ({onClose}) => (
+interface Props {
+  onClose:     React.EffectCallback
+  title:       Form,
+  description: Form,
+  date:        Form,
+  onClick:     (res: React.BaseSyntheticEvent) => void
+}
+
+export const Todo:React.FC<Props> = ({onClose, onClick, title, description, date}) => (
   <FieldBlockWrapper heading={<Heading {...{onClose}}/>} >
     <Layout padding={'0 10px'} margin={'0 0 15px 0'}>
       {/* タイトル */}
       <StyledInputField>
-        <TextField 
+        <TextField
+          name={title.name}
+          inputRef={title.ref}
           label={TODO_LABELS.TITLE}
           placeholder={`${TODO_LABELS.TITLE}${LABEL}`}
+          error={title.error ? true : false}
+          helperText={title.error}
           required={true}
         />
       </StyledInputField>
@@ -82,6 +97,8 @@ export const Todo:React.FC<Props> = ({onClose}) => (
       <StyledInputField>
         <TextField
           icon={ICONS.DATE}
+          name={date.name}
+          inputRef={date.ref}
           label={TODO_LABELS.DATE}
           placeholder={`${TODO_LABELS.DATE}${LABEL}`}
         />
@@ -91,6 +108,8 @@ export const Todo:React.FC<Props> = ({onClose}) => (
       <StyledInputField>
         <TextField
           icon={ICONS.DESCRIPTION}
+          name={description.name}
+          inputRef={description.ref}
           label={TODO_LABELS.DESCRIPTION}
           placeholder={`${TODO_LABELS.DESCRIPTION}${LABEL}`}
           multiline={true}
@@ -98,7 +117,7 @@ export const Todo:React.FC<Props> = ({onClose}) => (
       </StyledInputField>
 
       <StyledSubmitField>
-        <Button label={'保存'}/>
+        <Button label={'保存'} onClick={onClick} />
       </StyledSubmitField>
     </Layout>
   </FieldBlockWrapper>

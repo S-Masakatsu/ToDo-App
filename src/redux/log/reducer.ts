@@ -5,15 +5,15 @@ import Action from './actions'
 // --------------------------------------------------------------------
 
 // Entity -------------------------------------------------------------
-import {Log} from '@entity/log'
+import {LogList} from '@entity/log'
 // --------------------------------------------------------------------
 
-const init: Log = {
-  log: []
+const init: LogList = {
+  logList: []
 }
 
 export default reducerWithInitialState(init)
   .case(Action.addOperationLog, (state, payload) => ({
     ...state,
-    logs: [...state.log, payload]
+    logs: [...state.logList, payload]
   }))

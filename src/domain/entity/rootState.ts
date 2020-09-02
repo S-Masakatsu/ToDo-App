@@ -1,7 +1,7 @@
-import {Todo} from '@entity/todo'
-import {Log}  from '@entity/log'
+import {TodoList} from '@entity/todo'
+import {LogList}  from '@entity/log'
 
 export type RootState = {
-  todo: Todo,
-  log:  Log
+  todo: TodoList,
+  log:  LogList
 }

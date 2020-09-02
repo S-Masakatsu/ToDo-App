@@ -1,19 +1,17 @@
 import {reducerWithInitialState} from 'typescript-fsa-reducers'
 
-// Actions ------------------------------------------------------------
+// Actions
 import Action from './actions'
-// --------------------------------------------------------------------
 
-// Entity -------------------------------------------------------------
-import {Todo} from '@entity/todo'
-// --------------------------------------------------------------------
+// Entity
+import {TodoList} from '@entity/todo'
 
-const init: Todo = {
-  todo: []
+const init: TodoList = {
+  todoList: []
 }
 
 export default reducerWithInitialState(init)
   .case(Action.addTodo, (state, payload) => ({
     ...state,
-    todos: [...state.todo, payload]
+    todoList: [...state.todoList, payload]
   }))

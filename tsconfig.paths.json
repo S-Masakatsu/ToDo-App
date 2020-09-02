@@ -5,6 +5,7 @@
       "@assets/*":       ["./assets/*"],
       "@components/*":   ["./components/*"],
       "@screens":        ["./components/screens/index.ts"],
+      "@containers":     ["./components/containers/index.ts"],
       "@layouts":        ["./components/layouts/index.ts"],
       "@domain/element": ["./components/domain/element/index.ts"],
       "@domain/object":  ["./components/domain/object/index.ts"],
@@ -13,7 +14,7 @@
       "@entity/*":       ["./domain/entity/*"],
       "@services/*":     ["./domain/services/*"],
       "@redux/*":        ["./redux/*"],
-      "@utils/*":        ["./utils"]
+      "@utils/*":        ["./utils/*"]
     }
   }
 }
