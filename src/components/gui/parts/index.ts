@@ -1,4 +1,5 @@
 import {Button}            from './Button'
+import {CheckBox}          from './CheckBox'
 import {FieldBlockWrapper} from './FieldBlockWrapper'
 import {ModalWrapper}      from './ModalWrapper'
 import {NavBar}            from './NavBar'
@@ -8,6 +9,7 @@ import {TextField}         from './TextField'
 
 export {
   Button,
+  CheckBox,
   FieldBlockWrapper,
   ModalWrapper,
   NavBar,
