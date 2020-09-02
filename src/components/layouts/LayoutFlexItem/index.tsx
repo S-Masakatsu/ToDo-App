@@ -16,8 +16,8 @@ interface Props extends StyledProps {
   children: React.ReactNode
 }
 
-export const LayoutFlexItem: React.FC<Props> = ({column, children}) => (
-  <StyledFlex column={column}>{children}</StyledFlex>
+export const LayoutFlexItem: React.FC<Props> = props => (
+  <StyledFlex {...props} />
 )
 
 const StyledFlex = styled.div`

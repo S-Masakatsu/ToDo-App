@@ -26,17 +26,15 @@ interface Props extends StyledProps {
   children: React.ReactNode
 }
 
-export const Layout:React.FC<Props> = ({children, hasPadding, padding, hasMargin, margin}) => (
-  <StyledWrapper {...{hasPadding, padding, hasMargin, margin}}>
-    {children}
-  </StyledWrapper>
+export const Layout:React.FC<Props> = props => (
+  <StyledWrapper {...props} />
 )
 
 const StyledWrapper = styled.div`
   ${(props: StyledProps) => {
     const hasPadding = props.hasPadding || {}
     const hasMargin =  props.hasMargin  || {}
-    const getSpace = (bool?: boolean) => (bool ? `28px` : 0)
+    const getSpace = (bool?: boolean) => (bool ? `20px` : 0)
 
     return `
       margin-bottom: ${getSpace(

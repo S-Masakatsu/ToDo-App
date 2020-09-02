@@ -24,17 +24,8 @@ interface Props extends StyledProps {
   children: React.ReactNode
 }
 
-export const LayoutFlex:React.FC<Props> = ({
-  direction,
-  justify,
-  verticalAlign,
-  height,
-  minHeight,
-  children
-}) => (
-  <StyledFlexBox {...{direction, justify, verticalAlign, height, minHeight}}>
-    {children}
-  </StyledFlexBox>
+export const LayoutFlex:React.FC<Props> = props => (
+  <StyledFlexBox {...props} />
 )
 
 const StyledFlexBox = styled.div`
