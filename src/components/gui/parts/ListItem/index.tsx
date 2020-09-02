@@ -26,7 +26,7 @@ export const ListItem:React.FC<Props> = ({title, date}) => (
 )
 
 const StyledTitle = styled.h2`
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   font-weight: bold;
 `
 
@@ -34,7 +34,6 @@ const StyledDate = styled.p`
   display: inline-block;
   padding: 0 15px;
   text-align: center;
-  margin-top: 2px;
   color: #fff;
   border-radius: 50px;
   background: #20232a;
