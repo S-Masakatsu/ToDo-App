@@ -20,13 +20,13 @@ interface Props extends StyledProps {
 }
 
 export const CheckBox:React.FC<Props> = ({id, onChange, height, checkedColor}) => (
-  <StyledWapper height={height} >
+  <StyledWrapper height={height} >
     <StyledCheckBox {...{id, onChange}} />
     <StyledCheckLabel htmlFor={id} {...{height, checkedColor}}/>
-  </StyledWapper>
+  </StyledWrapper>
 )
 
-const StyledWapper = styled.div`
+const StyledWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
