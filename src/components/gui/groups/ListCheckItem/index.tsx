@@ -1,6 +1,11 @@
 /**
  * チェックボックス付リストアイテム
  * ListCheckItem GUI groups Component
+ * @id ID
+ * @title タイトル
+ * @date 日付
+ * @checked チェック
+ * @onChange チェックイベント
  */
 import React  from 'react'
 import styled from 'styled-components'
@@ -10,23 +15,24 @@ import {LayoutFlex} from '@layouts'
 import {CheckBox, ListItem} from '@gui/parts'
 
 interface Props {
-  id:        string
-  title:     string
-  date?:     string | undefined | null
-  onChange?: (res: React.BaseSyntheticEvent) => void
+  id:            string
+  title:         string
+  date?:         string | undefined | null
+  checked?: boolean
+  onChange?:     (res: React.BaseSyntheticEvent) => void
 }
 
-export const ListCheckItem:React.FC<Props> = ({id, title, date, onChange}) => (
+export const ListCheckItem:React.FC<Props> = ({id, title, date, checked, onChange}) => (
   <StyledWrapper>
     <LayoutFlex justify={'start'}>
       <StyledDone>
         <CheckBox
-          {...{id, onChange}}
+          {...{id, onChange, checked}}
           height={40}
           checkedColor={'#E20D0D'}
         />
       </StyledDone>
-      <ListItem {...{title, date}} />
+      <ListItem {...{title, date}} done={checked} />
     </LayoutFlex>
   </StyledWrapper>
 )

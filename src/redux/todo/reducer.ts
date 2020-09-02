@@ -12,6 +12,8 @@ const init: TodoList = {
 
 export default reducerWithInitialState(init)
   .case(Action.addTodo, (state, payload) => ({
-    ...state,
     todoList: [...state.todoList, payload]
+  }))
+  .case(Action.doneTodo, (state, id) => ({
+    todoList: state.todoList.map(t => t.id === id ? {...t, done: !t.done} : t)
   }))

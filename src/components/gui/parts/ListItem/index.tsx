@@ -7,14 +7,18 @@
 import React  from 'react'
 import styled from 'styled-components'
 
-interface Props {
+interface StyledProps {
+  done?: boolean
+}
+
+interface Props extends StyledProps {
   title: string
   date?: string | null
 }
 
-export const ListItem:React.FC<Props> = ({title, date}) => (
+export const ListItem:React.FC<Props> = ({title, date, done}) => (
   <div>
-    <StyledTitle>
+    <StyledTitle done={done}>
       {title}
     </StyledTitle>
     {date && (
@@ -26,8 +30,16 @@ export const ListItem:React.FC<Props> = ({title, date}) => (
 )
 
 const StyledTitle = styled.h2`
-  font-size: 1.4rem;
+  font-size: 1.15rem;
   font-weight: bold;
+  text-decoration: none;
+  ${(props: StyledProps) => {
+    if(!props.done) return
+    return `
+      color: #666;
+      text-decoration: line-through;
+    `
+  }}
 `
 
 const StyledDate = styled.p`

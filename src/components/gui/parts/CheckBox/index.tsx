@@ -4,6 +4,7 @@
  * @height チェックボックスの大きさ
  * @checkedColor チェック時の色
  * @id ID
+ * @checked チェック
  * @onChange チェックイベント
  */
 import React  from 'react'
@@ -15,13 +16,14 @@ interface StyledProps {
 }
 
 interface Props extends StyledProps {
-  id:        string
-  onChange?: (res: React.BaseSyntheticEvent) => void
+  id:            string
+  checked?: boolean
+  onChange?:     (res: React.BaseSyntheticEvent) => void
 }
 
-export const CheckBox:React.FC<Props> = ({id, onChange, height, checkedColor}) => (
+export const CheckBox:React.FC<Props> = ({id, checked, onChange, height, checkedColor}) => (
   <StyledWrapper height={height} >
-    <StyledCheckBox {...{id, onChange}} />
+    <StyledCheckBox {...{id, checked, onChange}} />
     <StyledCheckLabel htmlFor={id} {...{height, checkedColor}}/>
   </StyledWrapper>
 )

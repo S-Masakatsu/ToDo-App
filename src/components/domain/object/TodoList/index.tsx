@@ -22,6 +22,7 @@ export const TodoList:React.FC<Props> = ({todo, onChange}) => (
         id={String(t.id)}
         title={t.title}
         date={t.date}
+        checked={t.done}
         onChange={() => onChange(t.id)}
       />  
     )}

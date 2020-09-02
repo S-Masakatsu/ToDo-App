@@ -70,9 +70,9 @@ export const TodoEditContainer:React.FC = () => {
  */
 export const TodoListContainer:React.FC = () => {
   const todo = useSelector((state: RootState) => state.todo.todoList)
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const onChange = (id: number) => {
-    console.log(id)
+    dispatch(todoAction.doneTodo(id))
   }
 
   return <TodoList {...{todo, onChange}}/>

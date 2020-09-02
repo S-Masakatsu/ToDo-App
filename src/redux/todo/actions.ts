@@ -11,5 +11,6 @@ import {Todo} from '@entity/todo'
 const actionCreator = actionCreatorFactory()
 
 export default {
-  addTodo: actionCreator<Todo>(Type.ADD_TODO)
+  addTodo: actionCreator<Todo>(Type.ADD_TODO),
+  doneTodo: actionCreator<number>(Type.DONE_TODO),
 }

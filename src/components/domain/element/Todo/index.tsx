@@ -51,7 +51,7 @@ const Heading:React.FC<HeadingProps> = ({onClose}) => (
 const StyledDiv = styled.div`
   background-color: ${mainColor};
   border-radius: 8px 8px 0 0;
-  padding: 10px;
+  padding: 10px 15px;
 `
 const StyledHeading = styled.h1`
   color: #fff;
@@ -79,7 +79,7 @@ interface Props {
 
 export const Todo:React.FC<Props> = ({onClose, onClick, title, description, date}) => (
   <FieldBlockWrapper heading={<Heading {...{onClose}}/>} >
-    <Layout padding={'0 10px'} margin={'0 0 15px 0'}>
+    <Layout padding={'0 15px'} margin={'0 0 15px 0'}>
       {/* タイトル */}
       <StyledInputField>
         <TextField
