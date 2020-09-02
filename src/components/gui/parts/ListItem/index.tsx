@@ -9,7 +9,7 @@ import styled from 'styled-components'
 
 interface Props {
   title: string
-  date?: string
+  date?: string | null
 }
 
 export const ListItem:React.FC<Props> = ({title, date}) => (

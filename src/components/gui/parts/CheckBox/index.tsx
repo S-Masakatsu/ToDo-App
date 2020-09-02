@@ -16,7 +16,7 @@ interface StyledProps {
 
 interface Props extends StyledProps {
   id:        string
-  onChange?: React.EffectCallback
+  onChange?: (res: React.BaseSyntheticEvent) => void
 }
 
 export const CheckBox:React.FC<Props> = ({id, onChange, height, checkedColor}) => (

@@ -12,8 +12,8 @@ import {CheckBox, ListItem} from '@gui/parts'
 interface Props {
   id:        string
   title:     string
-  date?:     string
-  onChange?: React.EffectCallback
+  date?:     string | undefined | null
+  onChange?: (res: React.BaseSyntheticEvent) => void
 }
 
 export const ListCheckItem:React.FC<Props> = ({id, title, date, onChange}) => (

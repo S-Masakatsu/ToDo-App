@@ -6,10 +6,11 @@ import React from 'react'
 
 // Components
 import {ScreenWrapper} from '@gui/parts'
-import {TodoEditContainer} from '@containers'
+import {TodoListContainer, TodoEditContainer} from '@containers'
 
 export const HomeScreen = () => (
   <ScreenWrapper>
+    <TodoListContainer />
     <TodoEditContainer />
   </ScreenWrapper>
 )
