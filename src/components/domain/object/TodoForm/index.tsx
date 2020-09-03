@@ -5,7 +5,7 @@
 import React from 'react'
 
 // Components
-import {Todo} from '@domain/element'
+import {TodoEdit} from '@domain/element'
 import {ModalWrapper, OpenButton} from '@gui/parts'
 
 interface Form {
@@ -41,7 +41,7 @@ export const TodoForm:React.FC<Props> = ({
       ariaLabelledby={'todo-registration-form'}
       ariaDescribedby={'todo-input-form'}
     >
-      <Todo
+      <TodoEdit
         {...{title, description, date}}
         onClose={handleClose}
         onClick={onSubmit}

@@ -78,6 +78,7 @@ const StyledSelect = styled.select`
   color: #333;
   padding-right: 1em;
   cursor: pointer;
+  font-size: 1rem;
   text-indent: 0.01px;
   text-overflow: ellipsis;
   border: none;

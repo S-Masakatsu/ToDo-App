@@ -1,9 +1,10 @@
 import {Task} from '@entity/task'
 
-export type Todo = Task & {
+type Done = {done?: boolean}  // 完了したかどうか
+
+export type Todo = Task & Done & {
   description: string         // 説明
   date:        string | null  // 日付
-  done:        boolean        // 完了したかどうか
 }
 
 export type TodoList = {
@@ -15,3 +16,13 @@ export type TodoForm = {
   description?: string
   date?:        string | null
 }
+
+
+// todo selects
+export type TodoOption = string
+
+export type TodoSelectItem = Done & {
+  option: TodoOption
+}
+
+export type TodoSelectEvent = (choice: TodoOption) => void

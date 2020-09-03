@@ -1,7 +1,7 @@
 /**
  * TodoContainer
  */
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useForm} from 'react-hook-form'
 
@@ -15,8 +15,11 @@ import createMergeProps from '@utils/createMergeProps'
 import todoAction from '@redux/todo/actions'
 
 // Entity
-import {Todo} from '@entity/todo'
+import {Todo, TodoOption} from '@entity/todo'
 import {RootState} from '@entity/rootState'
+
+// Services
+import {TODO_SELECTS} from '@services/todo'
 
 /**
  * TodoEditContainer
@@ -69,11 +72,35 @@ export const TodoEditContainer:React.FC = () => {
  * TodoListContainer
  */
 export const TodoListContainer:React.FC = () => {
-  const todo = useSelector((state: RootState) => state.todo.todoList)
+  const todoList = useSelector((state: RootState) => state.todo.todoList)
+  const [todo, setTodo] = useState<Todo[]>(todoList)
+  useEffect(() => {
+    setTodo(todoList)
+  }, [todoList])
+
+  // Todo Done Event
   const dispatch = useDispatch()
   const onChange = (id: number) => {
     dispatch(todoAction.doneTodo(id))
   }
 
-  return <TodoList {...{todo, onChange}}/>
+  // Todo Show Select Event
+  const [selected, setSelected] = useState(TODO_SELECTS[0].option)
+  const select = createMergeProps(({
+    selected: selected,
+    onSelectedTodo: (choice: TodoOption) => {
+      const _choice = TODO_SELECTS.filter(t => t.option === choice)
+      if(_choice.length !== 0) {
+        const {done} = _choice[0]
+        if(done === undefined) {
+          setTodo(todoList)
+        } else {
+          setTodo(todoList.filter(t => t.done === done))
+        }
+      }
+      setSelected(choice)
+    }
+  }))
+
+  return <TodoList {...{select, todo, onChange}}/>
 }

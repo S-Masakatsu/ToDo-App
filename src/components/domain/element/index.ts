@@ -1,7 +1,8 @@
 import {HeaderNav} from './HeaderNav'
-import {Todo}      from './Todo'
+import {TodoEdit, SelectedTodo} from './Todo'
 
 export {
   HeaderNav,
-  Todo,
+  TodoEdit,
+  SelectedTodo,
 }

@@ -10,11 +10,15 @@ import {Layout, LayoutFlex} from '@layouts'
 import {
   Button,
   FieldBlockWrapper,
+  SelectBox,
   TextField
 } from '@gui/parts'
 
 // Entity
-import {TODO_LABELS} from '@services/todo'
+import {TodoOption, TodoSelectEvent} from '@entity/todo'
+
+// Services
+import {TODO_LABELS, TODO_OPTIONS} from '@services/todo'
 
 // Assets
 import {mainColor} from '@assets/js/variables'
@@ -77,7 +81,7 @@ interface Props {
   onClick:     (res: React.BaseSyntheticEvent) => void
 }
 
-export const Todo:React.FC<Props> = ({onClose, onClick, title, description, date}) => (
+export const TodoEdit:React.FC<Props> = ({onClose, onClick, title, description, date}) => (
   <FieldBlockWrapper heading={<Heading {...{onClose}}/>} >
     <Layout padding={'0 15px'} margin={'0 0 15px 0'}>
       {/* タイトル */}
@@ -126,8 +130,30 @@ export const Todo:React.FC<Props> = ({onClose, onClick, title, description, date
 const StyledInputField = styled.div`
   margin-top: 8px;
 `
-
 const StyledSubmitField = styled.div`
   margin-top: 12px;
   text-align: right;
 `
+
+
+interface SelectedProps {
+  selected?:       TodoOption
+  onSelectedTodo?: TodoSelectEvent
+}
+
+export const SelectedTodo:React.FC<SelectedProps> = ({selected, onSelectedTodo}) => {
+  const onSelected = (res: React.BaseSyntheticEvent) => {
+    if(!onSelectedTodo) return
+    const choice = res.target.value
+    onSelectedTodo(choice)
+  }
+
+  return (
+    <Layout>
+      <SelectBox
+        choices={TODO_OPTIONS}
+        {...{selected, onSelected}}
+      />
+    </Layout>
+  )
+}

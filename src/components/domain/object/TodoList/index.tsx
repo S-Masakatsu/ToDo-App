@@ -5,18 +5,24 @@
 import React from 'react'
 
 // Components
+import {SelectedTodo}  from '@domain/element'
 import {ListCheckItem} from '@gui/groups'
 
 // Entity
-import {Todo} from '@entity/todo'
+import {Todo, TodoOption, TodoSelectEvent} from '@entity/todo'
 
 interface Props {
+  select: {
+    selected?:       TodoOption
+    onSelectedTodo?: TodoSelectEvent
+  }
   todo:      Todo[],
   onChange?: any
 }
 
-export const TodoList:React.FC<Props> = ({todo, onChange}) => (
+export const TodoList:React.FC<Props> = ({select, todo, onChange}) => (
   <>
+    <SelectedTodo {...select} />
     {todo.map(t => 
       <ListCheckItem
         key={t.id}
