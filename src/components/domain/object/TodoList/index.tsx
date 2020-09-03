@@ -19,6 +19,7 @@ export const TodoList:React.FC<Props> = ({todo, onChange}) => (
   <>
     {todo.map(t => 
       <ListCheckItem
+        key={t.id}
         id={String(t.id)}
         title={t.title}
         date={t.date}
