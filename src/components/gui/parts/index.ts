@@ -6,6 +6,7 @@ import {ModalWrapper}      from './ModalWrapper'
 import {NavBar}            from './NavBar'
 import {OpenButton}        from './OpenButton'
 import {ScreenWrapper}     from './ScreenWrapper'
+import {SelectBox}         from './SelectBox'
 import {TextField}         from './TextField'
 
 export {
@@ -17,5 +18,6 @@ export {
   NavBar,
   OpenButton,
   ScreenWrapper,
+  SelectBox,
   TextField,
 }
