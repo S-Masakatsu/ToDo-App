@@ -34,7 +34,7 @@ const StyledWrapper = styled.div`
   ${(props: StyledProps) => {
     const hasPadding = props.hasPadding || {}
     const hasMargin =  props.hasMargin  || {}
-    const getSpace = (bool?: boolean) => (bool ? `20px` : 0)
+    const getSpace = (bool?: boolean) => (bool ? `16px` : 0)
 
     return `
       margin-bottom: ${getSpace(
