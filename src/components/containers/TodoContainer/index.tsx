@@ -73,34 +73,55 @@ export const TodoEditContainer:React.FC = () => {
  */
 export const TodoListContainer:React.FC = () => {
   const todoList = useSelector((state: RootState) => state.todo.todoList)
+
   const [todo, setTodo] = useState<Todo[]>(todoList)
+  const [selected, setSelected] = useState(TODO_SELECTS[0].option)
+  const [idList, setID] = useState<number[]>([])
+
   useEffect(() => {
-    setTodo(todoList)
+    const _choice = TODO_SELECTS.filter(t => t.option === selected)
+    if(_choice.length !== 0) {
+      const {done} = _choice[0]
+      if(done === undefined) {
+        setTodo(todoList)
+      } else {
+        const _todo = Array.from(new Set([
+          ...todoList.filter(t => t.done === done),
+          ...todoList.filter(t => idList.some(i => i === t.id))
+        ]))
+        setTodo(_todo.sort((a, b) => a.id < b.id ? -1 : 1))
+      }
+    }
   }, [todoList])
 
   // Todo Done Event
   const dispatch = useDispatch()
   const onChange = (id: number) => {
+    setID([...idList, id])
     dispatch(todoAction.doneTodo(id))
   }
 
   // Todo Show Select Event
-  const [selected, setSelected] = useState(TODO_SELECTS[0].option)
   const select = createMergeProps(({
     selected: selected,
     onSelectedTodo: (choice: TodoOption) => {
-      const _choice = TODO_SELECTS.filter(t => t.option === choice)
-      if(_choice.length !== 0) {
-        const {done} = _choice[0]
-        if(done === undefined) {
-          setTodo(todoList)
-        } else {
-          setTodo(todoList.filter(t => t.done === done))
-        }
-      }
-      setSelected(choice)
+      const isChange = choice !== 'DEFAULT'
+      setSelected(isChange ? choice : selected)
+      isChange && setID([])
     }
   }))
+
+  useEffect(() => {
+    const _choice = TODO_SELECTS.filter(t => t.option === selected)
+    if(_choice.length !== 0) {
+      const {done} = _choice[0]
+      if(done === undefined) {
+        setTodo(todoList)
+      } else {
+        setTodo(todoList.filter(t => t.done === done))
+      }
+    }
+  }, [selected])
 
   return <TodoList {...{select, todo, onChange}}/>
 }
