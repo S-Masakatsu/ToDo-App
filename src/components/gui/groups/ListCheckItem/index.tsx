@@ -42,7 +42,6 @@ const StyledWrapper = styled.div`
   padding-right: 20px;
   padding-top: 6px;
   padding-bottom: 6px;
-  max-width: 560px;
   border: 1px solid #dee2e6;
   box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
   border-radius: .25rem;

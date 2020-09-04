@@ -1,10 +1,9 @@
 /**
  * Flexレイアウトの子要素用
- * LayoutFlexItem Component
+ * LayoutFlexItem Layouts Component
  * @column カラムの数
  * @children ラップする中身
  */
-
 import React  from 'react'
 import styled from 'styled-components'
 

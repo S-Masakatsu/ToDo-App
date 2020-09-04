@@ -1,6 +1,6 @@
 /**
  * Flexレイアウト用
- * LayoutFlex Component
+ * LayoutFlex Layouts Component
  * @height height
  * @minHeight min-height
  * @direction flex-direction

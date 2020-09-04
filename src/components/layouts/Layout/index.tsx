@@ -1,6 +1,6 @@
 /**
  * レイアウトの子要素用
- * Layout Component
+ * Layout Layouts Component
  * @hasPadding paddingの有無[top,right,bttom,left]
  * @hasMargin marginの有無[top,right,bttom,left]
  * @children ラップする中身

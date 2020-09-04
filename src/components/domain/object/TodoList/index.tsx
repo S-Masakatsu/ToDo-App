@@ -5,6 +5,7 @@
 import React from 'react'
 
 // Components
+import {LayoutBox}     from '@layouts'
 import {SelectedTodo}  from '@domain/element'
 import {ListCheckItem} from '@gui/groups'
 
@@ -21,7 +22,7 @@ interface Props {
 }
 
 export const TodoList:React.FC<Props> = ({select, todo, onChange}) => (
-  <>
+  <LayoutBox maxWidth='560px' hasCenter={true} >
     <SelectedTodo {...select} />
     {todo.map(t => 
       <ListCheckItem
@@ -33,5 +34,5 @@ export const TodoList:React.FC<Props> = ({select, todo, onChange}) => (
         onChange={() => onChange(t.id)}
       />  
     )}
-  </>
+  </LayoutBox>
 )
