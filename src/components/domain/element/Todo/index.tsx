@@ -144,7 +144,7 @@ interface SelectedProps {
   selected?:       TodoOption
   onSelectedTodo?: TodoSelectEvent
 }
-export const SelectedTodo:React.FC<SelectedProps> = ({selected, onSelectedTodo}) => {
+export const TodoSelected:React.FC<SelectedProps> = ({selected, onSelectedTodo}) => {
   const onSelected = (res: React.BaseSyntheticEvent) => {
     if(!onSelectedTodo) return
     const choice = res.target.value
