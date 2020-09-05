@@ -5,9 +5,9 @@ import logReducer  from './log/reducer'
 import todoReducer from './todo/reducer'
 
 // RootState
-import {RootState} from '@entity/rootState'
+import {typeRootState} from '@entity/rootState'
 
-export default combineReducers<RootState>({
+export default combineReducers<typeRootState>({
   todo: todoReducer,
   log: logReducer
 })

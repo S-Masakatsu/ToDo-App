@@ -8,7 +8,7 @@ import React from 'react'
 import {Table} from '@gui/parts'
 
 // Entity
-import {TableLog} from '@entity/log'
+import {typeTableLog} from '@entity/log'
 
 // Constants
 const HEADERS: string[] = [
@@ -17,7 +17,7 @@ const HEADERS: string[] = [
 ]
 
 interface Props {
-  logs: TableLog[]
+  logs: typeTableLog[]
 }
 
 export const Log:React.FC<Props> = ({logs}) => (

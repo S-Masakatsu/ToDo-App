@@ -10,14 +10,14 @@ import {TodoSelected}  from '@domain/element'
 import {ListCheckItem} from '@gui/groups'
 
 // Entity
-import {Todo, TodoOption, TodoSelectEvent} from '@entity/todo'
+import {typeTodo, typeTodoOption, typeTodoSelectEvent} from '@entity/todo'
 
 interface Props {
   select: {
-    selected?:       TodoOption
-    onSelectedTodo?: TodoSelectEvent
+    selected?:       typeTodoOption
+    onSelectedTodo?: typeTodoSelectEvent
   }
-  todo:      Todo[],
+  todo:      typeTodo[],
   onChange?: any
 }
 

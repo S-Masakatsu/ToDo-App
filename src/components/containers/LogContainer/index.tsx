@@ -8,13 +8,13 @@ import {useSelector} from 'react-redux'
 import {LogList} from '@domain/object'
 
 // Entity
-import {RootState} from '@entity/rootState'
+import {typeRootState} from '@entity/rootState'
 
 // Services
 import {createStatusLog} from '@services/log'
 
 export const LogListContainer:React.FC = () => {
-  const stateLog = useSelector((state: RootState) => state.log.logList)
+  const stateLog = useSelector((state: typeRootState) => state.log.logList)
 
   const logs = stateLog.map(log => createStatusLog(log)).reverse()
   return <LogList logs={logs} />

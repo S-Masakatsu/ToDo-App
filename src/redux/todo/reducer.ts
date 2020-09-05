@@ -4,9 +4,9 @@ import {reducerWithInitialState} from 'typescript-fsa-reducers'
 import Action from './actions'
 
 // Entity
-import {TodoList} from '@entity/todo'
+import {typeTodoState} from '@entity/todo'
 
-const init: TodoList = {
+const init: typeTodoState = {
   todoList: []
 }
 

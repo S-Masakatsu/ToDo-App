@@ -9,10 +9,10 @@ import {Layout, LayoutBox} from '@layouts'
 import {Log} from '@domain/element'
 
 // Entity
-import {TableLog} from '@entity/log'
+import {typeTableLog} from '@entity/log'
 
 interface Props {
-  logs: TableLog[]
+  logs: typeTableLog[]
 }
 
 export const LogList:React.FC<Props> = props => (

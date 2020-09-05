@@ -16,9 +16,9 @@ import todoAction from '@redux/todo/actions'
 import logAction  from '@redux/log/actions'
 
 // Entity
-import {Todo, TodoOption} from '@entity/todo'
-import {Log} from '@entity/log'
-import {RootState} from '@entity/rootState'
+import {typeTodo, typeTodoForm, typeTodoOption} from '@entity/todo'
+import {typeLog} from '@entity/log'
+import {typeRootState} from '@entity/rootState'
 
 // Services
 import {TODO_SELECTS} from '@services/todo'
@@ -34,8 +34,8 @@ export const TodoEditContainer:React.FC = () => {
   const handleClose = () => setOpen(false)
 
   // TodoForm
-  const {register, handleSubmit, errors} = useForm<Todo>({reValidateMode: 'onChange'})
-  const title = createMergeProps({
+  const {register, handleSubmit, errors} = useForm<typeTodo>({reValidateMode: 'onChange'})
+  const title: typeTodoForm = createMergeProps({
     name: 'title',
     ref: register({
       required: true
@@ -43,22 +43,22 @@ export const TodoEditContainer:React.FC = () => {
     error: errors.title && 'タイトルが入力されていません'
   })
 
-  const description = createMergeProps({
-    name: 'description',
+  const description: typeTodoForm = createMergeProps({
+    name: 'memo',
     ref: register
   })
 
-  const date = createMergeProps({
+  const date: typeTodoForm = createMergeProps({
     name: 'date',
     ref: register
   })
 
-  const todos = useSelector((state: RootState) => state.todo.todoList)
+  const todos = useSelector((state: typeRootState) => state.todo.todoList)
   const dispatch = useDispatch()
-  const onSubmit = handleSubmit((data: Todo) => {
+  const onSubmit = handleSubmit((data: typeTodo) => {
     const len = todos.length
     const id = len === 0 ? 1 : todos[len - 1].id + 1
-    const todo: Todo = {
+    const todo: typeTodo = {
       ...data,
       id,
       done: false
@@ -66,7 +66,7 @@ export const TodoEditContainer:React.FC = () => {
     dispatch(todoAction.addTodo(todo))
 
     const {title} = data
-    const log: Log = {
+    const log: typeLog = {
       id,
       title,
       status: '追加',
@@ -85,9 +85,9 @@ export const TodoEditContainer:React.FC = () => {
  * TodoListContainer
  */
 export const TodoListContainer:React.FC = () => {
-  const todoList = useSelector((state: RootState) => state.todo.todoList)
+  const todoList = useSelector((state: typeRootState) => state.todo.todoList)
 
-  const [todo, setTodo] = useState<Todo[]>(todoList)
+  const [todo, setTodo] = useState<typeTodo[]>(todoList)
   const [selected, setSelected] = useState(TODO_SELECTS[0].option)
   const [idList, setID] = useState<number[]>([])
 
@@ -113,7 +113,7 @@ export const TodoListContainer:React.FC = () => {
     setID([...idList, resID])
     dispatch(todoAction.doneTodo(resID))
     const t = todoList.filter(t => t.id === resID)[0]
-    const log: Log = {
+    const log: typeLog = {
       id: t.id,
       title: t.title,
       status: t.done ? '未完了' : '完了',
@@ -125,7 +125,7 @@ export const TodoListContainer:React.FC = () => {
   // Todo Show Select Event
   const select = createMergeProps(({
     selected: selected,
-    onSelectedTodo: (choice: TodoOption) => {
+    onSelectedTodo: (choice: typeTodoOption) => {
       const isChange = choice !== 'DEFAULT'
       setSelected(isChange ? choice : selected)
       isChange && setID([])

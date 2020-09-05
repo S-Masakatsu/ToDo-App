@@ -4,23 +4,20 @@
  */
 import React from 'react'
 
+// Entity
+import {typeTodoForm} from '@entity/todo'
+
 // Components
 import {TodoEdit} from '@domain/element'
 import {ModalWrapper, OpenButton} from '@gui/parts'
-
-interface Form {
-  name:   string
-  ref:    any
-  error?: string
-}
 
 interface Props {
   open:        boolean,
   handleOpen:  (res?: React.BaseSyntheticEvent) => void,
   handleClose: (res?: React.BaseSyntheticEvent) => void,
-  title:       Form,
-  description: Form,
-  date:        Form,
+  title:       typeTodoForm,
+  description: typeTodoForm,
+  date:        typeTodoForm,
   onSubmit:    (res?: React.BaseSyntheticEvent) => void
 }
 

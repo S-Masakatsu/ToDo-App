@@ -5,10 +5,10 @@ import Action from './actions'
 // --------------------------------------------------------------------
 
 // Entity -------------------------------------------------------------
-import {LogList} from '@entity/log'
+import {typeLogState} from '@entity/log'
 // --------------------------------------------------------------------
 
-const init: LogList = {
+const init: typeLogState = {
   logList: []
 }
 

@@ -15,7 +15,7 @@ import {
 } from '@gui/parts'
 
 // Entity
-import {TodoOption, TodoSelectEvent} from '@entity/todo'
+import {typeTodoForm, typeTodoOption, typeTodoSelectEvent} from '@entity/todo'
 
 // Services
 import {TODO_LABELS, TODO_OPTIONS} from '@services/todo'
@@ -71,16 +71,11 @@ const StyledButton = styled.button`
 /**
  * Form Edit Component
  */
-interface Form {
-  name:   string
-  ref:    any
-  error?: string
-}
 interface Props {
   onClose:     React.EffectCallback
-  title:       Form,
-  description: Form,
-  date:        Form,
+  title:       typeTodoForm,
+  description: typeTodoForm,
+  date:        typeTodoForm,
   onClick:     (res: React.BaseSyntheticEvent) => void
 }
 export const TodoEdit:React.FC<Props> = ({onClose, onClick, title, description, date}) => (
@@ -141,8 +136,8 @@ const StyledSubmitField = styled.div`
  * Todo List SelectBox Status
  */
 interface SelectedProps {
-  selected?:       TodoOption
-  onSelectedTodo?: TodoSelectEvent
+  selected?:       typeTodoOption
+  onSelectedTodo?: typeTodoSelectEvent
 }
 export const TodoSelected:React.FC<SelectedProps> = ({selected, onSelectedTodo}) => {
   const onSelected = (res: React.BaseSyntheticEvent) => {

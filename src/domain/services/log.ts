@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 
 // Entity
 import {typeTitle} from '@entity/task'
-import {Log, typeStatus, typeStatusLog, TableLog} from '@entity/log'
+import {typeLog, typeStatus, typeStatusLog, typeTableLog} from '@entity/log'
 
 export const YYYYMMDD_hhmm = (): string => {
   const day = dayjs()
@@ -13,7 +13,7 @@ export const YYYYMMDD_hhmm = (): string => {
 const createLog = (title: typeTitle, status: typeStatus): typeStatusLog =>
   `「${title}」を${status}しました`
 
-export const createStatusLog = (state: Log): TableLog => [
+export const createStatusLog = (state: typeLog): typeTableLog => [
   state.operatedAt,
   createLog(state.title, state.status)
 ]

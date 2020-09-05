@@ -8,7 +8,7 @@ import React from 'react'
 import {NavBar} from '@gui/parts'
 
 // Entity
-import {Pages} from '@entity/navigation'
+import {typePages} from '@entity/navigation'
 
 // Services
 import {MAIN_PAGES, PATH_PAGES} from '@services/pages'
@@ -18,7 +18,8 @@ import ListAltIcon   from '@material-ui/icons/ListAlt'
 import HistoryIcon   from '@material-ui/icons/History'
 import DateRangeIcon from '@material-ui/icons/DateRange'
 
-const PAGES: Pages = [
+// Constants
+const PAGES: typePages = [
   {
     primary: MAIN_PAGES.HOME,
     icon: <ListAltIcon />,

@@ -9,7 +9,7 @@ import clsx   from 'clsx'
 import {LayoutFlex} from '@layouts'
 
 // Entity
-import {Pages} from '@entity/navigation'
+import {typePages} from '@entity/navigation'
 
 // Material-UI
 import {makeStyles, useTheme, Theme, createStyles} from '@material-ui/core/styles'
@@ -77,10 +77,10 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-interface Props {
-  listItems: Pages
-}
 
+interface Props {
+  listItems: typePages
+}
 const APP_NAME = process.env.REACT_APP_NAME
 export const NavBar:React.FC<Props> = ({listItems}) => {
   const classes = useStyles()
@@ -129,9 +129,8 @@ export const NavBar:React.FC<Props> = ({listItems}) => {
 interface NaviDrawerProps {
   open:      boolean
   onClick:   React.EffectCallback
-  listItems: Pages
+  listItems: typePages
 }
-
 const NavDrawer:React.FC<NaviDrawerProps> = ({open, onClick, listItems}) => {
   const classes = useStyles()
   const theme = useTheme()
@@ -167,7 +166,6 @@ interface ListItemProps {
   to:      string
   onClick: React.EffectCallback
 }
-
 const ListItemLink:React.FC<ListItemProps> = ({icon, primary, to, onClick}) => {
   const classes = useStyles()
   const CustomLink = useMemo(() =>
