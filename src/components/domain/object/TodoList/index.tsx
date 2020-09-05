@@ -6,7 +6,7 @@ import React from 'react'
 
 // Components
 import {LayoutBox}     from '@layouts'
-import {SelectedTodo}  from '@domain/element'
+import {TodoSelected}  from '@domain/element'
 import {ListCheckItem} from '@gui/groups'
 
 // Entity
@@ -23,7 +23,7 @@ interface Props {
 
 export const TodoList:React.FC<Props> = ({select, todo, onChange}) => (
   <LayoutBox maxWidth='560px' hasCenter={true} >
-    <SelectedTodo {...select} />
+    <TodoSelected {...select} />
     {todo.map(t => 
       <ListCheckItem
         key={t.id}
