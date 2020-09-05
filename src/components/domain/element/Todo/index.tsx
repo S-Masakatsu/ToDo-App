@@ -1,5 +1,5 @@
 /**
- * Todo入力コンポーネント
+ * Todo
  * Todo Domain Element Component
  */
 import React from 'react'
@@ -36,11 +36,13 @@ const ICONS = {
   DESCRIPTION: <NotesIcon />,
 }
 
-// Form Header Component
+
+/**
+ * Form Header Component
+ */
 interface HeadingProps {
   onClose: React.EffectCallback
 }
-
 const Heading:React.FC<HeadingProps> = ({onClose}) => (
   <StyledDiv>
     <LayoutFlex>
@@ -66,13 +68,14 @@ const StyledButton = styled.button`
   border-radius: 50%;
 `
 
-// Form Component
+/**
+ * Form Edit Component
+ */
 interface Form {
   name:   string
   ref:    any
   error?: string
 }
-
 interface Props {
   onClose:     React.EffectCallback
   title:       Form,
@@ -80,7 +83,6 @@ interface Props {
   date:        Form,
   onClick:     (res: React.BaseSyntheticEvent) => void
 }
-
 export const TodoEdit:React.FC<Props> = ({onClose, onClick, title, description, date}) => (
   <FieldBlockWrapper heading={<Heading {...{onClose}}/>} >
     <Layout padding={'0 15px'} margin={'0 0 15px 0'}>
@@ -135,12 +137,13 @@ const StyledSubmitField = styled.div`
   text-align: right;
 `
 
-
+/**
+ * Todo List SelectBox Status
+ */
 interface SelectedProps {
   selected?:       TodoOption
   onSelectedTodo?: TodoSelectEvent
 }
-
 export const SelectedTodo:React.FC<SelectedProps> = ({selected, onSelectedTodo}) => {
   const onSelected = (res: React.BaseSyntheticEvent) => {
     if(!onSelectedTodo) return
