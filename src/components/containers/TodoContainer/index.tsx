@@ -92,7 +92,7 @@ export const TodoListContainer:React.FC = () => {
         setTodo(_todo.sort((a, b) => a.id < b.id ? -1 : 1))
       }
     }
-  }, [todoList])
+  }, [todoList, selected, idList])
 
   // Todo Done Event
   const dispatch = useDispatch()
@@ -110,18 +110,6 @@ export const TodoListContainer:React.FC = () => {
       isChange && setID([])
     }
   }))
-
-  useEffect(() => {
-    const _choice = TODO_SELECTS.filter(t => t.option === selected)
-    if(_choice.length !== 0) {
-      const {done} = _choice[0]
-      if(done === undefined) {
-        setTodo(todoList)
-      } else {
-        setTodo(todoList.filter(t => t.done === done))
-      }
-    }
-  }, [selected])
 
   return <TodoList {...{select, todo, onChange}}/>
 }
