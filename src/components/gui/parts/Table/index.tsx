@@ -10,12 +10,17 @@ import styled from 'styled-components'
 // Assets
 import {mainColor} from '@assets/js/variables'
 
-interface Props {
-  headers?: string[]
-  bodys?:   string[]
+interface StyledProps {
+  tdNotfirstLeft?: boolean
 }
 
-export const Table:React.FC<Props> = ({headers, bodys}) => (
+type items = string[]
+interface Props extends StyledProps {
+  headers?: items
+  bodys:    items[]
+}
+
+export const Table:React.FC<Props> = ({headers, bodys, tdNotfirstLeft}) => (
   <StyledTable>
     <StyledHeader>
       <tr>
@@ -25,12 +30,14 @@ export const Table:React.FC<Props> = ({headers, bodys}) => (
       </tr>
     </StyledHeader>
 
-    <StyledBody>
-      <tr>
-        {(bodys || ['body']).map((b, i) => (
-          <StyledTd key={i} children={b} />
-        ))}
-      </tr>
+    <StyledBody tdNotfirstLeft={tdNotfirstLeft} >
+      {bodys.map((tr, i) => (
+        <tr key={i}>
+          {tr.map((b, i) => (
+            <StyledTd key={i} children={b} />
+          ))}
+        </tr>
+      ))}
     </StyledBody>
   </StyledTable>
 )
@@ -80,6 +87,15 @@ const StyledTd = styled.td`
 `
 
 const StyledBody = styled.tbody`
+  ${(props: StyledProps) => {
+    if(!props.tdNotfirstLeft) return
+    return `
+      ${StyledTd}:not(:first-child) {
+        text-align: left;
+      }
+    `
+  }}
+
   ${StyledTd}:last-child {
     border-right: 1px solid #a8b7c5;
   }

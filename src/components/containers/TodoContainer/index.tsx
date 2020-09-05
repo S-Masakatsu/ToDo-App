@@ -13,13 +13,16 @@ import createMergeProps from '@utils/createMergeProps'
 
 // Redux Action
 import todoAction from '@redux/todo/actions'
+import logAction  from '@redux/log/actions'
 
 // Entity
 import {Todo, TodoOption} from '@entity/todo'
+import {Log} from '@entity/log'
 import {RootState} from '@entity/rootState'
 
 // Services
 import {TODO_SELECTS} from '@services/todo'
+import {YYYYMMDD_hhmm} from '@services/log'
 
 /**
  * TodoEditContainer
@@ -54,13 +57,23 @@ export const TodoEditContainer:React.FC = () => {
   const dispatch = useDispatch()
   const onSubmit = handleSubmit((data: Todo) => {
     const len = todos.length
-    const _id = len === 0 ? 1 : todos[len - 1].id + 1
-    const todo: Todo = createMergeProps({
+    const id = len === 0 ? 1 : todos[len - 1].id + 1
+    const todo: Todo = {
       ...data,
-      id: _id,
+      id,
       done: false
-    })
+    }
     dispatch(todoAction.addTodo(todo))
+
+    const {title} = data
+    const log: Log = {
+      id,
+      title,
+      status: '追加',
+      operatedAt: YYYYMMDD_hhmm()
+    }
+    dispatch(logAction.addOperationLog(log))
+
     handleClose()
   })
 
@@ -96,9 +109,17 @@ export const TodoListContainer:React.FC = () => {
 
   // Todo Done Event
   const dispatch = useDispatch()
-  const onChange = (id: number) => {
-    setID([...idList, id])
-    dispatch(todoAction.doneTodo(id))
+  const onChange = (resID: number) => {
+    setID([...idList, resID])
+    dispatch(todoAction.doneTodo(resID))
+    const t = todoList.filter(t => t.id === resID)[0]
+    const log: Log = {
+      id: t.id,
+      title: t.title,
+      status: t.done ? '未完了' : '完了',
+      operatedAt: YYYYMMDD_hhmm()
+    }
+    dispatch(logAction.addOperationLog(log))
   }
 
   // Todo Show Select Event

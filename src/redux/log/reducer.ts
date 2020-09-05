@@ -15,5 +15,5 @@ const init: LogList = {
 export default reducerWithInitialState(init)
   .case(Action.addOperationLog, (state, payload) => ({
     ...state,
-    logs: [...state.logList, payload]
+    logList: [...state.logList, payload]
   }))

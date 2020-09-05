@@ -6,9 +6,10 @@ import React from 'react'
 
 // Components
 import {ScreenWrapper} from '@gui/parts'
+import {LogListContainer} from '@containers'
 
 export const LogScreen = () => (
   <ScreenWrapper>
-    <h1>操作履歴</h1>
+    <LogListContainer />
   </ScreenWrapper>
 )

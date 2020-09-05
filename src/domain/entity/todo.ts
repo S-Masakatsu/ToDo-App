@@ -1,21 +1,19 @@
-import {Task} from '@entity/task'
+import {typeTitle, Task} from '@entity/task'
 
 type Done = {done?: boolean}  // 完了したかどうか
 
-export type Todo = Task & Done & {
+type typeMemo = {
   description: string         // 説明
   date:        string | null  // 日付
 }
+
+export type Todo = Task & Done & typeMemo
 
 export type TodoList = {
   todoList: Todo[]
 }
 
-export type TodoForm = {
-  title:        string
-  description?: string
-  date?:        string | null
-}
+export type TodoForm = typeTitle & typeMemo
 
 
 // todo selects

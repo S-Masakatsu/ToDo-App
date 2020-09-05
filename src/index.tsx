@@ -6,6 +6,10 @@ import * as serviceWorker from './serviceWorker'
 
 import '@assets/css/_base.sass'
 
+import dayjs from 'dayjs'
+import 'dayjs/locale/ja'
+dayjs.locale('ja')
+
 ReactDOM.render(
   <React.StrictMode>
     <AppRouter />
