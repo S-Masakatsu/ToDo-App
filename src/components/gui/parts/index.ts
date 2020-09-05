@@ -7,6 +7,7 @@ import {NavBar}            from './NavBar'
 import {OpenButton}        from './OpenButton'
 import {ScreenWrapper}     from './ScreenWrapper'
 import {SelectBox}         from './SelectBox'
+import {Table}             from './Table'
 import {TextField}         from './TextField'
 
 export {
@@ -19,5 +20,6 @@ export {
   OpenButton,
   ScreenWrapper,
   SelectBox,
+  Table,
   TextField,
 }
