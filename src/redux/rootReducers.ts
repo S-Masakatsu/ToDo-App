@@ -1,13 +1,11 @@
 import {combineReducers} from 'redux'
 
-// Reducer ------------------------------------------------------------
+// Reducer
 import logReducer  from './log/reducer'
 import todoReducer from './todo/reducer'
-// --------------------------------------------------------------------
 
-// RootState ----------------------------------------------------------
+// RootState
 import {RootState} from '@entity/rootState'
-// --------------------------------------------------------------------
 
 export default combineReducers<RootState>({
   todo: todoReducer,

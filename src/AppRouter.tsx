@@ -18,6 +18,7 @@ import {HeaderNav} from '@domain/element'
 
 // Utils
 import Page from '@utils/Page'
+import {LocalStorage} from '@utils/localStorage'
 
 // Services
 import {PATH_PAGES} from '@services/pages'
@@ -27,6 +28,7 @@ import store from '@redux/store'
 
 export default () => (
   <Provider store={store}>
+    <LocalStorage />
     <BrowserRouter>
       <HeaderNav />
       <Switch>
