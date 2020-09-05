@@ -30,7 +30,7 @@ export const Table:React.FC<Props> = ({headers, bodys, tdNotfirstLeft}) => (
       </tr>
     </StyledHeader>
 
-    <StyledBody tdNotfirstLeft={tdNotfirstLeft} >
+    <StyledBody >
       {bodys.map((tr, i) => (
         <tr key={i}>
           {tr.map((b, i) => (
@@ -57,7 +57,7 @@ const StyledTable = styled.table`
 `
 
 const StyledTh = styled.th`
-  text-align: center;
+  text-align: left;
   color:white;
   background: linear-gradient(#829ebc,${mainColor});
   border-left: 1px solid #3c6690;
@@ -65,6 +65,7 @@ const StyledTh = styled.th`
   border-bottom: 1px solid #3c6690;
   box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;
   padding: 10px 0;
+  padding-left: 10px;
 `
 
 const StyledHeader = styled.thead`
@@ -78,24 +79,19 @@ const StyledHeader = styled.thead`
 `
 
 const StyledTd = styled.td`
-  text-align: center;
+  text-align: left;
   border-left: 1px solid #a8b7c5;
   border-bottom: 1px solid #a8b7c5;
   border-top:none;
   box-shadow: 0px -3px 5px 1px #eee inset;
   padding: 10px 0;
+  padding-left: 5px;
+  @media (min-width: 475px) {
+    padding-left: 10px;
+  }
 `
 
 const StyledBody = styled.tbody`
-  ${(props: StyledProps) => {
-    if(!props.tdNotfirstLeft) return
-    return `
-      ${StyledTd}:not(:first-child) {
-        text-align: left;
-      }
-    `
-  }}
-
   ${StyledTd}:last-child {
     border-right: 1px solid #a8b7c5;
   }
