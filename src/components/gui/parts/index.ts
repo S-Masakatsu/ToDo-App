@@ -1,4 +1,5 @@
 import {Button}            from './Button'
+import {CalendarElement}   from './CalendarElement'
 import {CheckBox}          from './CheckBox'
 import {FieldBlockWrapper} from './FieldBlockWrapper'
 import {ListItem}          from './ListItem'
@@ -12,6 +13,7 @@ import {TextField}         from './TextField'
 
 export {
   Button,
+  CalendarElement,
   CheckBox,
   FieldBlockWrapper,
   ListItem,

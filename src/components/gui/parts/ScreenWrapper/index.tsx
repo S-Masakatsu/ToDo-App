@@ -1,5 +1,6 @@
 /**
  * ScreenWrapper GUI Parts Component
+ * @hasPadding 左右にpaddingを入れるか
  */
 import React  from 'react'
 import styled from 'styled-components'
@@ -9,19 +10,20 @@ import {Layout} from '@layouts'
 
 // Constants
 const LAYOUT_OPTION = {
-  MARGIN:  {},
+  MARGIN:  {bottom: false},
   PADDING: {left: true, right: true}
 }
 
 interface Props {
-  children: React.ReactNode
+  children:    React.ReactNode
+  hasPadding?: boolean
 }
 
-export const ScreenWrapper:React.FC<Props> = ({children}) => (
+export const ScreenWrapper:React.FC<Props> = ({children, hasPadding = true}) => (
   <StyledMain>
     <Layout
       hasMargin={LAYOUT_OPTION.MARGIN}
-      hasPadding={LAYOUT_OPTION.PADDING}
+      hasPadding={hasPadding ? LAYOUT_OPTION.PADDING : {}}
     >
       {children}
     </Layout>
