@@ -6,7 +6,7 @@ import React from 'react'
 
 // Components
 import {ScreenWrapper} from '@gui/parts'
-import {Calendar} from '@domain/element'
+import {CalendarContainer} from '@containers'
 import {useWindowDimensions} from '@utils/windowDimensions'
 
 export const CalendarScreen = () => {
@@ -14,7 +14,7 @@ export const CalendarScreen = () => {
 
   return (
     <ScreenWrapper hasPadding={600 < width}>
-      <Calendar />
+      <CalendarContainer />
     </ScreenWrapper>
   )
 }

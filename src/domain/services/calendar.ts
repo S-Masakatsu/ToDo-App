@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 
 // Entity
-import {typeCalendarDay, typeCalendar, typeFormat} from '@entity/calendar'
+import {typeCalendarState, typeCalendarDay, typeCalendar, typeFormat} from '@entity/calendar'
 
 // Constants
 const CALENDAR_GRID = 7 * 5 // 35
@@ -10,8 +10,8 @@ const CALENDAR_GRID = 7 * 5 // 35
 /**
  * 日付配列を作成する
  */
-export const createCalendar = (): typeCalendar => {
-  const firstDay = dayjs().startOf('month')
+export const createCalendar = (d: typeCalendarState): typeCalendar => {
+  const firstDay = getMonth(d)
   const firstDayIdx = firstDay.day()
 
   return Array(CALENDAR_GRID).fill(0).map((_, i) => {
@@ -19,6 +19,14 @@ export const createCalendar = (): typeCalendar => {
     return firstDay.add(diffFromFirstDay, 'day')
   })
 }
+
+
+/**
+ * その年月のdayjsを返します
+ * @param {typeCalendarState} d 年・月
+ * @returns {dayjs.Dayjs} dayjs
+ */
+export const getMonth = (d: typeCalendarState): dayjs.Dayjs => dayjs(`${d.year}-${d.month}`)
 
 
 /**

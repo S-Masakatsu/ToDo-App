@@ -10,7 +10,7 @@ import {CalendarElement} from '@gui/parts'
 import {LayoutGrid} from '@layouts'
 
 // Entity
-import {typeCalendar, typeWeek} from '@entity/calendar'
+import {typeCalendarState, typeCalendar, typeWeek} from '@entity/calendar'
 
 // Serives
 import {createCalendar} from '@services/calendar'
@@ -24,7 +24,6 @@ const LAYOUT_CALENDAR = {
   tmpCol: 'repeat(7, 1fr)', // 7days
   tmpRow: 'none',
 }
-const CALENDAR: typeCalendar = createCalendar()
 
 
 /**
@@ -61,12 +60,17 @@ const StyledWeek = styled.div<StyledWeekProps>`
 /**
  * Calendar Component
  */
-export const Calendar:React.FC = () => {
+interface Props {
+  calendar: typeCalendarState
+}
+
+export const CalendarBord:React.FC<Props> = ({calendar}) => {
+  const days: typeCalendar = createCalendar(calendar)
   return (
     <StyledCalendar>
       <LayoutGrid {...LAYOUT_CALENDAR} >
         <Week />
-        {CALENDAR.map(c => 
+        {days.map(c => 
           <CalendarElement key={c.toISOString()} day={c} /> 
         )}
       </LayoutGrid>

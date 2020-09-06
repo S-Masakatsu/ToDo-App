@@ -1,6 +1,17 @@
 import dayjs from 'dayjs'
 
 /**
+ * typeCalendarState
+ * @year  @type {number} Year
+ * @month @type {number} Month
+ */
+export type typeCalendarState = {
+  year:  number
+  month: number
+}
+
+
+/**
  * typeCalendarDay
  * @type {dayjs.Dayjs}
  */

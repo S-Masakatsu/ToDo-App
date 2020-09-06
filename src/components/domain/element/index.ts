@@ -1,10 +1,10 @@
-import {Calendar}  from './Calendar'
+import {CalendarBord}  from './Calendar'
 import {HeaderNav} from './HeaderNav'
 import {Log} from './Log'
 import {TodoEdit, TodoSelected} from './Todo'
 
 export {
-  Calendar,
+  CalendarBord,
   HeaderNav,
   Log,
   TodoEdit,
