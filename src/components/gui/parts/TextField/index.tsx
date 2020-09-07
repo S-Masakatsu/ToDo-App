@@ -26,6 +26,7 @@ interface Props {
   icon?: React.ReactNode
   label: string
   name?: string
+  type?: string
   defaultValue?: string
   placeholder?: string
   required?: boolean
@@ -33,15 +34,23 @@ interface Props {
   inputRef?: any
   error?: boolean
   helperText?: string
+  hasShrink?: boolean
 }
 
-export const TextField:React.SFC<Props> = ({icon, label, name, defaultValue, placeholder, required, multiline, inputRef, error, helperText}) => (
+const shrink = (hasShrink: boolean) => {
+  if(!hasShrink) return 
+  return {shrink: true}
+}
+
+export const TextField:React.FC<Props> = ({icon, label, name, type, defaultValue, placeholder, required, multiline, inputRef, error, helperText, hasShrink}) => (
   <LayoutFlex>
     {icon && <StyledDiv children={icon} />}
     <InputText
       {...{label, defaultValue, name, required, multiline, inputRef, error, helperText}}
+      type={type || 'text'}
       placeholder={placeholder || '入力してください...'}
       className={classes.txtAria}
+      InputLabelProps={shrink(hasShrink || false)}
     />
   </LayoutFlex>
 )

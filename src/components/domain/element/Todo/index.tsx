@@ -99,6 +99,8 @@ export const TodoEdit:React.FC<Props> = ({onClose, onClick, title, description, 
         <TextField
           icon={ICONS.DATE}
           name={date.name}
+          type={'date'}
+          hasShrink={true}
           inputRef={date.ref}
           label={TODO_LABELS.DATE}
           placeholder={`${TODO_LABELS.DATE}${LABEL}`}

@@ -62,12 +62,13 @@ const StyledHeader = styled.div`
 `
 
 const StyledThis = styled.h1`
-  margin: 0 ${window.innerWidth / 8}px;
   color: rgba(0, 0, 0, 0.54);
   font-size: 1.5rem;
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   font-weight: 400;
   line-height: 1.334;
+  text-align: center;
+  width: ${window.innerWidth / 2}px;
   letter-spacing: 0em;
 `
 
@@ -88,7 +89,6 @@ const Week:React.FC = () => (
 interface StyledWeekProps {
   children: typeWeek
 }
-
 const StyledWeek = styled.div<StyledWeekProps>`
   color: rgba(0, 0, 0, 0.54);
   font-weight: bold;
