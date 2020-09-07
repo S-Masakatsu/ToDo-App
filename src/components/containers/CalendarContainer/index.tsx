@@ -10,15 +10,28 @@ import {Calendar} from '@domain/object'
 // Entity
 import {typeCalendarState} from '@entity/calendar'
 
+// Serives
+import {formatState, getNextMonth, getPreviousMonth} from '@services/calendar'
+
+// Utils
+import createMergeProps from '@utils/createMergeProps'
+
 export const CalendarContainer:React.FC = () => {
   const day = dayjs()
-  const [calendar, setCalendar] = useState<typeCalendarState>({
-    year: day.year(),
-    month: day.month() + 1
+  const [calendar, setCalendar] = useState<typeCalendarState>(formatState(day))
+
+  const handlePreviousMonth = () => {
+    setCalendar(getPreviousMonth)
+  }
+
+  const handleNextMonth = () => {
+    setCalendar(getNextMonth)
+  }
+
+  const navigation = createMergeProps({
+    previous: handlePreviousMonth,
+    next: handleNextMonth
   })
 
-  const setYear  = (y: number) => setCalendar({...calendar, year: y})
-  const setMonth = (m: number) => setCalendar({...calendar, month: m})
-
-  return <Calendar {...{calendar}} />
+  return <Calendar {...{calendar, navigation}} />
 }

@@ -12,6 +12,10 @@ import {typeCalendarState} from '@entity/calendar'
 
 interface Props {
   calendar: typeCalendarState
+  navigation: {
+    previous: (res: React.BaseSyntheticEvent) => void,
+    next:     (res: React.BaseSyntheticEvent) => void
+  }
 }
 
 export const Calendar:React.FC<Props> = props => (

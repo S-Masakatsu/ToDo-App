@@ -1,7 +1,12 @@
 import dayjs from 'dayjs'
 
 // Entity
-import {typeCalendarState, typeCalendarDay, typeCalendar, typeFormat} from '@entity/calendar'
+import {
+  typeCalendarState,
+  typeCalendarDay,
+  typeCalendar,
+  typeFormat
+} from '@entity/calendar'
 
 // Constants
 const CALENDAR_GRID = 7 * 5 // 35
@@ -73,3 +78,39 @@ export const isSameMonth = (m1?: typeCalendarDay, m2?: typeCalendarDay): boolean
   const format: typeFormat = "YYYYMM"
   return m1.format(format) === m2.format(format)
 }
+
+
+/**
+ * 差分のcalendar stateを作成する高階関数
+ * @param {number} diff 差分の月数
+ * @returns {typeCalendarState} calendar state
+ */
+const getMonthStateCreator = (diff: number) => (d: typeCalendarState): typeCalendarState => {
+  const day = getMonth(d).add(diff, 'month')
+  return formatState(day)
+}
+
+
+/**
+ * Next Month
+ * @returns {typeCalendarState} 1ヶ月後のcalendar state
+ */
+export const getNextMonth = getMonthStateCreator(1)
+
+
+/**
+ * Previous Month
+ * @returns {typeCalendarState} 1ヶ月前のcalendar state
+ */
+export const getPreviousMonth = getMonthStateCreator(-1)
+
+
+/**
+ * state用のフォーマット
+ * @param {dayjs.Dayjs} day
+ * @returns {typeCalendarState} calendar state
+ */
+export const formatState = (day: dayjs.Dayjs): typeCalendarState => ({
+  year: day.year(),
+  month: day.month() + 1,
+})

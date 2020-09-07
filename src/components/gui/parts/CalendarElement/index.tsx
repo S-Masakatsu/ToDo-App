@@ -1,39 +1,35 @@
 /**
  * カレンダー Element
  * CalendarElement GUI parts Component
+ * @day dayjs
+ * @isToday 当日かどうか
+ * @isCurrentMonth その月の日にちかどうか
  */
 import React  from 'react'
 import styled from 'styled-components'
-import dayjs  from 'dayjs'
 
 // Entity
 import {typeCalendarDay} from '@entity/calendar'
 
 // Services
-import {formatDay, isSameDay, isSameMonth} from '@services/calendar'
+import {formatDay} from '@services/calendar'
 
 // assets
 import {calendarBorder} from '@assets/js/variables'
-
-// Constants
-const TODAY = dayjs()
 
 interface StyledProps {
   isToday?:        boolean
   isCurrentMonth?: boolean
 }
 
-interface Props {
+interface Props extends StyledProps {
   day: typeCalendarDay
 }
 
-export const CalendarElement:React.FC<Props> = ({day}) => (
+export const CalendarElement:React.FC<Props> = ({day, isCurrentMonth, isToday}) => (
   <StyledElement>
     <StyledDate>
-      <StyledToday
-        isCurrentMonth={isSameMonth(day, TODAY)}
-        isToday={isSameDay(day, TODAY)}
-      >
+      <StyledToday {...{isCurrentMonth, isToday}}>
         {formatDay(day)}
       </StyledToday>
     </StyledDate>
@@ -43,7 +39,7 @@ export const CalendarElement:React.FC<Props> = ({day}) => (
 const StyledElement = styled.div`
   border-right: ${calendarBorder};
   border-bottom: ${calendarBorder};
-  height: 14.4vh;
+  height: ${window.innerHeight * 0.02}vh;
 `
 
 const StyledDate = styled.div`
@@ -52,7 +48,7 @@ const StyledDate = styled.div`
   text-align: center;
 `
 
-const StyledToday = styled.span<StyledProps>`
+const StyledToday = styled.span`
   color: ${(props: StyledProps) => !props.isCurrentMonth && 'rgba(0, 0, 0, 0.54)'};
 
   ${(props: StyledProps) => {
@@ -60,9 +56,9 @@ const StyledToday = styled.span<StyledProps>`
     return `
       display: inline-block;
       line-height: 24px;
-      width: 24px;
       background-color: #1a73e8;
       color: #fff;
+      padding: 0 7px;
       border-radius: 50%;
     `
   }}

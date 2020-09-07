@@ -4,19 +4,25 @@
  */
 import React  from 'react'
 import styled from 'styled-components'
+import dayjs  from 'dayjs'
 
 // Components
 import {CalendarElement} from '@gui/parts'
-import {LayoutGrid} from '@layouts'
+import {LayoutFlex, LayoutGrid} from '@layouts'
 
 // Entity
 import {typeCalendarState, typeCalendar, typeWeek} from '@entity/calendar'
 
 // Serives
-import {createCalendar} from '@services/calendar'
+import {createCalendar, isSameDay, isSameMonth} from '@services/calendar'
 
 // assets
 import {calendarBorder} from '@assets/js/variables'
+
+// Material-UI
+import {IconButton}    from '@material-ui/core'
+import ArrowBackIos    from '@material-ui/icons/ArrowBackIos'
+import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos'
 
 // Constants
 const WEEK: typeWeek[] = ['日', '月', '火', '水', '木', '金', '土']
@@ -24,6 +30,46 @@ const LAYOUT_CALENDAR = {
   tmpCol: 'repeat(7, 1fr)', // 7days
   tmpRow: 'none',
 }
+
+
+/**
+ * Navigation
+ */
+interface NavigationProps {
+  calendar: typeCalendarState
+  previous: (res: React.BaseSyntheticEvent) => void,
+  next:     (res: React.BaseSyntheticEvent) => void
+}
+
+const Navigation:React.FC<NavigationProps> = ({calendar, previous, next}) => (
+  <StyledHeader>
+    <LayoutFlex justify={'center'}>
+      <IconButton size='small' onClick={previous}>
+        <ArrowBackIos />
+      </IconButton>
+      <StyledThis>
+        {`${calendar.year}年${calendar.month}月`}
+      </StyledThis>
+      <IconButton size='small' onClick={next}>
+        <ArrowForwardIos />
+      </IconButton>
+    </LayoutFlex>
+  </StyledHeader>
+)
+
+const StyledHeader = styled.div`
+  margin-bottom: 8px;
+`
+
+const StyledThis = styled.h1`
+  margin: 0 ${window.innerWidth / 8}px;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 1.5rem;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  line-height: 1.334;
+  letter-spacing: 0em;
+`
 
 
 /**
@@ -42,6 +88,7 @@ const Week:React.FC = () => (
 interface StyledWeekProps {
   children: typeWeek
 }
+
 const StyledWeek = styled.div<StyledWeekProps>`
   color: rgba(0, 0, 0, 0.54);
   font-weight: bold;
@@ -62,19 +109,32 @@ const StyledWeek = styled.div<StyledWeekProps>`
  */
 interface Props {
   calendar: typeCalendarState
+  navigation: {
+    previous: (res: React.BaseSyntheticEvent) => void,
+    next:     (res: React.BaseSyntheticEvent) => void
+  }
 }
 
-export const CalendarBord:React.FC<Props> = ({calendar}) => {
+export const CalendarBord:React.FC<Props> = ({calendar, navigation}) => {
+  const today = dayjs()
   const days: typeCalendar = createCalendar(calendar)
   return (
-    <StyledCalendar>
-      <LayoutGrid {...LAYOUT_CALENDAR} >
-        <Week />
-        {days.map(c => 
-          <CalendarElement key={c.toISOString()} day={c} /> 
-        )}
-      </LayoutGrid>
-    </StyledCalendar>
+    <>
+      <Navigation {...navigation} calendar={calendar} />
+      <StyledCalendar>
+        <LayoutGrid {...LAYOUT_CALENDAR} >
+          <Week />
+          {days.map(c => 
+            <CalendarElement
+              key={c.toISOString()}
+              day={c}
+              isToday={isSameDay(c, today)}
+              isCurrentMonth={isSameMonth(c, dayjs(`${calendar.year}-${calendar.month}`))}
+            /> 
+          )}
+        </LayoutGrid>
+      </StyledCalendar>
+    </>
   )
 }
 
