@@ -23,16 +23,22 @@ interface StyledProps {
 }
 
 interface Props extends StyledProps {
-  day: typeCalendarDay
-  onClick?: (res: React.BaseSyntheticEvent) => void
+  day:        typeCalendarDay
+  onClick?:   (res: React.BaseSyntheticEvent) => void
+  schedules?: React.ReactNode
 }
 
-export const CalendarElement:React.FC<Props> = ({day, onClick, isCurrentMonth, isToday}) => (
+export const CalendarElement:React.FC<Props> = ({day, onClick, isCurrentMonth, isToday, schedules}) => (
   <StyledElement {...{onClick}}>
     <StyledDate>
       <StyledToday {...{isCurrentMonth, isToday}}>
         {formatDay(day)}
       </StyledToday>
+      {schedules && 
+        <StyledSchedules>
+          {schedules}
+        </StyledSchedules>
+      }
     </StyledDate>
   </StyledElement>
 )
@@ -49,6 +55,11 @@ const StyledDate = styled.div`
   text-align: center;
 `
 
+const StyledSchedules = styled.ul`
+  overflow: scroll;
+  height: calc(${window.innerHeight * 0.022}vh - 40px);
+`
+
 const StyledToday = styled.span`
   color: ${(props: StyledProps) => !props.isCurrentMonth && 'rgba(0, 0, 0, 0.54)'};
 
@@ -56,7 +67,6 @@ const StyledToday = styled.span`
     if(!props.isToday) return ''
     return `
       display: inline-block;
-      line-height: 24px;
       background-color: #1a73e8;
       color: #fff;
       padding: 0 7px;

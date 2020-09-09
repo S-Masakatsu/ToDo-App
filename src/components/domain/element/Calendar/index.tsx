@@ -3,19 +3,21 @@
  * Calendar Domain Element Component
  */
 import React  from 'react'
+import {useSelector} from 'react-redux'
 import styled from 'styled-components'
 import dayjs  from 'dayjs'
 
 // Components
 import {CalendarElement} from '@gui/parts'
-import {LayoutFlex, LayoutGrid} from '@layouts'
+import {LayoutBox, LayoutFlex, LayoutGrid} from '@layouts'
 
 // Entity
-import {typeCalendarState, typeCalendar, typeWeek} from '@entity/calendar'
+import {typeCalendarState, typeCalendarDay, typeCalendar, typeWeek} from '@entity/calendar'
 import {typeFormOpen} from '@entity/todo'
+import {typeRootState} from '@entity/rootState'
 
 // Serives
-import {createCalendar, isSameDay, isSameMonth} from '@services/calendar'
+import {createCalendar, formatDate, isSameDay, isSameMonth} from '@services/calendar'
 
 // assets
 import {calendarBorder} from '@assets/js/variables'
@@ -106,6 +108,39 @@ const StyledWeek = styled.div<StyledWeekProps>`
 
 
 /**
+ * Schedule
+ */
+const Schedules = (date: typeCalendarDay) => {
+  const todo = useSelector((state: typeRootState) => state.todo.todoList)
+  const _date = formatDate(date)
+  const schedules = todo.filter(i => i.date === _date)
+  if(schedules.length === 0) return
+
+  return (
+    <LayoutBox width='90%' hasCenter={true}>
+      {schedules.map(s => 
+        <StyledSchedule>
+          {s.title}
+        </StyledSchedule>  
+      )}
+    </LayoutBox>
+  )
+}
+const StyledSchedule = styled.li`
+  background-color: rgb(121, 134, 203);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 10px;
+  padding: 1px 3px;
+  margin: 1px 0;
+  cursor: pointer;
+  &:not(:last-of-type) {
+    margin-bottom: 3px
+  }
+`
+
+
+/**
  * Calendar Component
  */
 interface Props {
@@ -130,6 +165,7 @@ export const CalendarBord:React.FC<Props> = ({calendar, navigation, handleOpen})
             <div key={c.toISOString()} onClick={() => handleOpen(c)}>
               <CalendarElement
                 day={c}
+                schedules={Schedules(c)}
                 isToday={isSameDay(c, today)}
                 isCurrentMonth={isSameMonth(c, dayjs(`${calendar.year}-${calendar.month}`))}
               /> 
