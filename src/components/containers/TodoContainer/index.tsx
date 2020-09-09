@@ -3,20 +3,16 @@
  */
 import React, {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {useForm} from 'react-hook-form'
 
 // Components
 import {Todo, TodoList} from '@domain/object'
-
-// Utils
-import createMergeProps from '@utils/createMergeProps'
 
 // Redux Action
 import todoAction from '@redux/todo/actions'
 import logAction  from '@redux/log/actions'
 
 // Entity
-import {typeTodo, typeTodoForm, typeTodoOption} from '@entity/todo'
+import {typeTodo, typeTodoOption} from '@entity/todo'
 import {typeLog} from '@entity/log'
 import {typeRootState} from '@entity/rootState'
 
@@ -24,65 +20,21 @@ import {typeRootState} from '@entity/rootState'
 import {TODO_SELECTS} from '@services/todo'
 import {YYYYMMDD_hhmm} from '@services/log'
 
+// Utils
+import createMergeProps from '@utils/createMergeProps'
+import {useTodoAddForm} from '@utils/todoForm'
+
 /**
- * TodoEditContainer
+ * TodoEdit Container
  */
 export const TodoEditContainer:React.FC = () => {
-  // Form Modal
-  const [open, setOpen] = useState(false)
-  const handleOpen  = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-
-  // TodoForm
-  const {register, handleSubmit, errors} = useForm<typeTodo>({reValidateMode: 'onChange'})
-  const title: typeTodoForm = createMergeProps({
-    name: 'title',
-    ref: register({
-      required: true
-    }),
-    error: errors.title && 'タイトルが入力されていません'
-  })
-
-  const description: typeTodoForm = createMergeProps({
-    name: 'memo',
-    ref: register
-  })
-
-  const date: typeTodoForm = createMergeProps({
-    name: 'date',
-    ref: register
-  })
-
-  const todos = useSelector((state: typeRootState) => state.todo.todoList)
-  const dispatch = useDispatch()
-  const onSubmit = handleSubmit((data: typeTodo) => {
-    const len = todos.length
-    const id = len === 0 ? 1 : todos[len - 1].id + 1
-    const todo: typeTodo = {
-      ...data,
-      id,
-      done: false
-    }
-    dispatch(todoAction.addTodo(todo))
-
-    const {title} = data
-    const log: typeLog = {
-      id,
-      title,
-      status: '追加',
-      operatedAt: YYYYMMDD_hhmm()
-    }
-    dispatch(logAction.addOperationLog(log))
-
-    handleClose()
-  })
-
-  return <Todo {...{open, handleOpen, handleClose, title, description, date, onSubmit}}/>
+  const {open, form, onSubmit, handleOpen, handleClose} = useTodoAddForm()
+  return <Todo {...{open, handleOpen, handleClose, form, onSubmit}}/>
 }
 
 
 /**
- * TodoListContainer
+ * TodoList Container
  */
 export const TodoListContainer:React.FC = () => {
   const todoList = useSelector((state: typeRootState) => state.todo.todoList)

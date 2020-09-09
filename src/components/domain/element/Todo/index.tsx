@@ -15,7 +15,7 @@ import {
 } from '@gui/parts'
 
 // Entity
-import {typeTodoForm, typeTodoOption, typeTodoSelectEvent} from '@entity/todo'
+import {typeTodoFormItem, typeTodoOption, typeTodoSelectEvent} from '@entity/todo'
 
 // Services
 import {TODO_LABELS, TODO_OPTIONS} from '@services/todo'
@@ -73,9 +73,9 @@ const StyledButton = styled.button`
  */
 interface Props {
   onClose:     React.EffectCallback
-  title:       typeTodoForm,
-  description: typeTodoForm,
-  date:        typeTodoForm,
+  title:       typeTodoFormItem,
+  description: typeTodoFormItem,
+  date:        typeTodoFormItem,
   onClick:     (res: React.BaseSyntheticEvent) => void
 }
 export const TodoEdit:React.FC<Props> = ({onClose, onClick, title, description, date}) => (

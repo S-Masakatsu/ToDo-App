@@ -12,6 +12,7 @@ import {LayoutFlex, LayoutGrid} from '@layouts'
 
 // Entity
 import {typeCalendarState, typeCalendar, typeWeek} from '@entity/calendar'
+import {typeFormOpen} from '@entity/todo'
 
 // Serives
 import {createCalendar, isSameDay, isSameMonth} from '@services/calendar'
@@ -113,7 +114,7 @@ interface Props {
     previous: (res: React.BaseSyntheticEvent) => void,
     next:     (res: React.BaseSyntheticEvent) => void
   }
-  handleOpen: (date?: dayjs.Dayjs | null) => void
+  handleOpen: typeFormOpen
 }
 
 export const CalendarBord:React.FC<Props> = ({calendar, navigation, handleOpen}) => {

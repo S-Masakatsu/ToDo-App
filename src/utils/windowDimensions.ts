@@ -1,3 +1,7 @@
+/**
+ * windowDimensions custom Hooks
+ * windowDimensions utils Hook
+ */
 import {useState, useEffect} from 'react'
 
 /**

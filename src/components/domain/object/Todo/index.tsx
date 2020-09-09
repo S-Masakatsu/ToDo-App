@@ -13,6 +13,7 @@ import {ListCheckItem} from '@gui/groups'
 // Entity
 import {
   typeTodo,
+  typeFormOpen,
   typeTodoForm,
   typeTodoOption,
   typeTodoSelectEvent
@@ -53,18 +54,14 @@ export const TodoList:React.FC<TodoListProps> = ({select, todo, onChange}) => (
 interface TodoEditProps {
   open:        boolean,
   handleClose: (res?: React.BaseSyntheticEvent) => void,
-  title:       typeTodoForm,
-  description: typeTodoForm,
-  date:        typeTodoForm,
+  form:        typeTodoForm,
   onSubmit:    (res?: React.BaseSyntheticEvent) => void
 }
 
 export const TodoModalEdit:React.FC<TodoEditProps> = ({
   open,
   handleClose,
-  title,
-  description,
-  date,
+  form,
   onSubmit
 }) => (
   <ModalWrapper
@@ -74,7 +71,7 @@ export const TodoModalEdit:React.FC<TodoEditProps> = ({
     ariaDescribedby={'todo-input-form'}
   >
     <TodoEdit
-      {...{title, description, date}}
+      {...{...form}}
       onClose={handleClose}
       onClick={onSubmit}
     />
@@ -87,17 +84,15 @@ export const TodoModalEdit:React.FC<TodoEditProps> = ({
  */
 interface Props {
   open:        boolean,
-  handleOpen:  (res?: React.BaseSyntheticEvent) => void,
+  handleOpen:  typeFormOpen,
   handleClose: (res?: React.BaseSyntheticEvent) => void,
-  title:       typeTodoForm,
-  description: typeTodoForm,
-  date:        typeTodoForm,
+  form:       typeTodoForm,
   onSubmit:    (res?: React.BaseSyntheticEvent) => void
 }
 
 export const Todo:React.FC<Props> = props => (
   <>
-    <OpenButton onClick={props.handleOpen} />
+    <OpenButton onClick={() => props.handleOpen()} />
     <TodoModalEdit {...props} />
   </>
 )

@@ -19,17 +19,35 @@ type typeDescription = {
 }
 
 /**
- * Todo Edit Form
+ * Modal Form Open
+ * @type {(date?: dayjs.Dayjs | null) => void}
+ */
+export type typeFormOpen = (date?: dayjs.Dayjs | null) => void
+
+/**
+ * Todo Edit Form Item
  * @name         @type {'title'|'memo'|'date'} input name
  * @ref          @type {any|undefined} ref
  * @error        @type {string|undefined} error message
  * @defaultValue @type {string|undefined} defaultValue
  */
-export type typeTodoForm = {
+export type typeTodoFormItem = {
   name:   'title' | 'memo' | 'date'
   ref?:   any
   error?: string
   defaultValue?: string
+}
+
+/**
+ * Todo Edit Form
+ * @title       @type {typeTodoFormItem} タイトル
+ * @description @type {typeTodoFormItem} メモ
+ * @date        @type {typeTodoFormItem} 日付
+ */
+export type typeTodoForm = {
+  title:       typeTodoFormItem
+  description: typeTodoFormItem
+  date:        typeTodoFormItem
 }
 
 /**
