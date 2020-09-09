@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useForm} from 'react-hook-form'
 
 // Components
-import {TodoForm, TodoList} from '@domain/object'
+import {Todo, TodoList} from '@domain/object'
 
 // Utils
 import createMergeProps from '@utils/createMergeProps'
@@ -77,7 +77,7 @@ export const TodoEditContainer:React.FC = () => {
     handleClose()
   })
 
-  return <TodoForm {...{open, handleOpen, handleClose, title, description, date, onSubmit}}/>
+  return <Todo {...{open, handleOpen, handleClose, title, description, date, onSubmit}}/>
 }
 
 

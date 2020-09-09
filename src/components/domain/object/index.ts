@@ -1,11 +1,11 @@
 import {Calendar} from './Calendar'
-import {LogList}  from './LogList'
-import {TodoForm} from './TodoForm'
-import {TodoList} from './TodoList'
+import {Log}      from './Log'
+import {Todo, TodoList, TodoModalEdit} from './Todo'
 
 export {
   Calendar,
-  LogList,
-  TodoForm,
+  Log,
+  Todo,
   TodoList,
+  TodoModalEdit,
 }
