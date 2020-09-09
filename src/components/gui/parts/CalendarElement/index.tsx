@@ -24,10 +24,11 @@ interface StyledProps {
 
 interface Props extends StyledProps {
   day: typeCalendarDay
+  onClick?: (res: React.BaseSyntheticEvent) => void
 }
 
-export const CalendarElement:React.FC<Props> = ({day, isCurrentMonth, isToday}) => (
-  <StyledElement>
+export const CalendarElement:React.FC<Props> = ({day, onClick, isCurrentMonth, isToday}) => (
+  <StyledElement {...{onClick}}>
     <StyledDate>
       <StyledToday {...{isCurrentMonth, isToday}}>
         {formatDay(day)}

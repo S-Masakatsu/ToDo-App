@@ -100,6 +100,7 @@ export const TodoEdit:React.FC<Props> = ({onClose, onClick, title, description, 
           icon={ICONS.DATE}
           name={date.name}
           type={'date'}
+          defaultValue={date.defaultValue}
           hasShrink={true}
           inputRef={date.ref}
           label={TODO_LABELS.DATE}

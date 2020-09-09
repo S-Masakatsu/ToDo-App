@@ -113,9 +113,10 @@ interface Props {
     previous: (res: React.BaseSyntheticEvent) => void,
     next:     (res: React.BaseSyntheticEvent) => void
   }
+  handleOpen: (date?: dayjs.Dayjs | null) => void
 }
 
-export const CalendarBord:React.FC<Props> = ({calendar, navigation}) => {
+export const CalendarBord:React.FC<Props> = ({calendar, navigation, handleOpen}) => {
   const today = dayjs()
   const days: typeCalendar = createCalendar(calendar)
   return (
@@ -124,13 +125,14 @@ export const CalendarBord:React.FC<Props> = ({calendar, navigation}) => {
       <StyledCalendar>
         <LayoutGrid {...LAYOUT_CALENDAR} >
           <Week />
-          {days.map(c => 
-            <CalendarElement
-              key={c.toISOString()}
-              day={c}
-              isToday={isSameDay(c, today)}
-              isCurrentMonth={isSameMonth(c, dayjs(`${calendar.year}-${calendar.month}`))}
-            /> 
+          {days.map(c =>
+            <div key={c.toISOString()} onClick={() => handleOpen(c)}>
+              <CalendarElement
+                day={c}
+                isToday={isSameDay(c, today)}
+                isCurrentMonth={isSameMonth(c, dayjs(`${calendar.year}-${calendar.month}`))}
+              /> 
+            </div>
           )}
         </LayoutGrid>
       </StyledCalendar>

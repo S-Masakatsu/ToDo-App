@@ -55,6 +55,17 @@ export const formatDay = (day?: typeCalendarDay): string => {
 
 
 /**
+ * 年月日をフォーマットする
+ * @param day {typeCalendarDay} 
+ */
+export const formatDate = (day?: typeCalendarDay): string => {
+  if(!day) return '1'
+  const format = 'YYYY-MM-DD'
+  return day.format(format)
+}
+
+
+/**
  * 日付を比較する
  * @param d1 {typeCalendarDay}
  * @param d2 {typeCalendarDay}

@@ -3,6 +3,7 @@
  * Calendar Domain Object Component
  */
 import React from 'react'
+import dayjs from 'dayjs'
 
 // Components
 import {CalendarBord} from '@domain/element'
@@ -16,6 +17,7 @@ interface Props {
     previous: (res: React.BaseSyntheticEvent) => void,
     next:     (res: React.BaseSyntheticEvent) => void
   }
+  handleOpen: (date?: dayjs.Dayjs | null) => void
 }
 
 export const Calendar:React.FC<Props> = props => (

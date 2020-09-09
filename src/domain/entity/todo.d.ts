@@ -20,14 +20,16 @@ type typeDescription = {
 
 /**
  * Todo Edit Form
- * @name  @type {'title'|'memo'|'date'} input name
- * @ref   @type {any} ref
- * @error @type {string|null} error message
+ * @name         @type {'title'|'memo'|'date'} input name
+ * @ref          @type {any|undefined} ref
+ * @error        @type {string|undefined} error message
+ * @defaultValue @type {string|undefined} defaultValue
  */
 export type typeTodoForm = {
   name:   'title' | 'memo' | 'date'
   ref?:   any
   error?: string
+  defaultValue?: string
 }
 
 /**
