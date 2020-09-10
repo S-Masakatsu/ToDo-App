@@ -3,34 +3,34 @@
  * ListItem GUI parts Component
  * @title タイトル
  * @date 日付
+ * @done 完了の有無
+ * @tagDate タグ化(デフォルト：true)
  */
 import React  from 'react'
 import styled from 'styled-components'
+import {Property} from 'csstype'
 
 interface StyledProps {
-  done?: boolean
+  done?:     boolean
+  fontSize?: Property.FontSize
 }
 
 interface Props extends StyledProps {
   title: string
-  date?: string | null
+  children?: React.ReactNode
 }
 
-export const ListItem:React.FC<Props> = ({title, date, done}) => (
-  <div>
-    <StyledTitle done={done}>
+export const ListItem:React.FC<Props> = ({title, done, children, fontSize}) => (
+  <>
+    <StyledTitle done={done} fontSize={fontSize}>
       {title}
     </StyledTitle>
-    {date && (
-      <StyledDate>
-        {date}
-      </StyledDate>
-    )}
-  </div>
+    {children}
+  </>
 )
 
 const StyledTitle = styled.h2`
-  font-size: 1.15rem;
+  font-size: ${(props: StyledProps) => props.fontSize || '1.15rem'};
   font-weight: bold;
   text-decoration: none;
   ${(props: StyledProps) => {
@@ -40,13 +40,4 @@ const StyledTitle = styled.h2`
       text-decoration: line-through;
     `
   }}
-`
-
-const StyledDate = styled.p`
-  display: inline-block;
-  padding: 0 15px;
-  text-align: center;
-  color: #fff;
-  border-radius: 50px;
-  background: #20232a;
 `

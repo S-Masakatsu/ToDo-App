@@ -12,7 +12,7 @@ import styled from 'styled-components'
 
 // Components
 import {LayoutFlex} from '@layouts'
-import {CheckBox, ListItem} from '@gui/parts'
+import {CheckBox, ListItem, TagItem} from '@gui/parts'
 
 interface Props {
   id:            string
@@ -20,9 +20,10 @@ interface Props {
   date?:         string | undefined | null
   checked?: boolean
   onChange?:     (res: React.BaseSyntheticEvent) => void
+  onClick?:      (res: React.BaseSyntheticEvent) => void
 }
 
-export const ListCheckItem:React.FC<Props> = ({id, title, date, checked, onChange}) => (
+export const ListCheckItem:React.FC<Props> = ({id, title, date, checked, onChange, onClick}) => (
   <StyledWrapper>
     <LayoutFlex justify={'start'}>
       <StyledDone>
@@ -32,7 +33,11 @@ export const ListCheckItem:React.FC<Props> = ({id, title, date, checked, onChang
           checkedColor={'#E20D0D'}
         />
       </StyledDone>
-      <ListItem {...{title, date}} done={checked} />
+      <StyledItem onClick={onClick}>
+        <ListItem title={title} done={checked} >
+          <TagItem text={date} />
+        </ListItem>
+      </StyledItem>
     </LayoutFlex>
   </StyledWrapper>
 )
@@ -49,4 +54,8 @@ const StyledWrapper = styled.div`
 
 const StyledDone = styled.div`
   margin-right: 8px;
+`
+
+const StyledItem = styled.div`
+  width: 100%;
 `

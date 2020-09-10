@@ -10,12 +10,13 @@ import {Layout, LayoutFlex} from '@layouts'
 import {
   Button,
   FieldBlockWrapper,
+  ListItem,
   SelectBox,
   TextField
 } from '@gui/parts'
 
 // Entity
-import {typeTodoFormItem, typeTodoOption, typeTodoSelectEvent} from '@entity/todo'
+import {typeTodo, typeTodoFormItem, typeTodoOption, typeTodoSelectEvent} from '@entity/todo'
 
 // Services
 import {TODO_LABELS, TODO_OPTIONS} from '@services/todo'
@@ -29,7 +30,11 @@ import NotesIcon      from '@material-ui/icons/Notes'
 import CloseIcon      from '@material-ui/icons/Close'
 
 // Constants
-const HEADING = 'ToDoを追加'
+enum HEADING {
+  ADD    = 'ToDoを追加',
+  DETAIL = 'ToDoの詳細',
+  EDIT   = 'ToDoの編集',
+}
 const LABEL   = 'を追加'
 const ICONS = {
   DATE:        <AccessTimeIcon />,
@@ -41,12 +46,13 @@ const ICONS = {
  * Form Header Component
  */
 interface HeadingProps {
+  title?:  string
   onClose: React.EffectCallback
 }
-const Heading:React.FC<HeadingProps> = ({onClose}) => (
+const Heading:React.FC<HeadingProps> = ({title, onClose}) => (
   <StyledDiv>
     <LayoutFlex>
-      <StyledHeading children={HEADING} />
+      <StyledHeading children={title || HEADING.ADD} />
       <StyledButton onClick={onClose}>
         <CloseIcon />
       </StyledButton>
@@ -158,3 +164,49 @@ export const TodoSelected:React.FC<SelectedProps> = ({selected, onSelectedTodo})
     </Layout>
   )
 }
+
+
+/**
+ * Todo Detail Component
+ */
+interface DetailProps {
+  onClose: React.EffectCallback
+  todo?:   typeTodo
+}
+
+export const TodoDetail:React.FC<DetailProps> = ({onClose, todo}) => {
+  if(!todo) return <></>
+  return (
+    <FieldBlockWrapper
+      heading={
+        <Heading {...{onClose}} title={HEADING.DETAIL} />
+      } 
+    >
+      <Layout padding={'15px 15px 0'} margin={'0 0 15px 0'}>
+        <ListItem title={todo.title} fontSize={'1.5rem'} >
+          {todo.date}
+        </ListItem>
+
+        {todo.memo !== '' && (
+          <Layout margin={'18px 0 0 0'}>
+            <LayoutFlex justify={'start'} verticalAlign={'start'}>
+              {ICONS.DESCRIPTION}
+              <StyledDescription>
+                {todo.memo.split(' ').map(m => m)}
+              </StyledDescription>
+            </LayoutFlex>
+          </Layout>
+        )}
+
+        <StyledSubmitField>
+          <Button label={'編集'} onClick={() => console.log('更新')} />
+        </StyledSubmitField>
+      </Layout>
+    </FieldBlockWrapper>
+  )
+}
+
+const StyledDescription = styled.p`
+  margin-left: 10px;
+  white-space: pre-wrap;
+`

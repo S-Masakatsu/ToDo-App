@@ -5,7 +5,7 @@ import React, {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
 // Components
-import {Todo, TodoList} from '@domain/object'
+import {Todo, TodoList, TodoModalDetail} from '@domain/object'
 
 // Redux Action
 import todoAction from '@redux/todo/actions'
@@ -84,5 +84,22 @@ export const TodoListContainer:React.FC = () => {
     }
   }))
 
-  return <TodoList {...{select, todo, onChange}}/>
+  const [open, setOpen] = useState<boolean>(false)
+  const [task, setTask] = useState<typeTodo>()
+  const handleOpen = (id: number) => {
+    const item = todoList.filter(i => i.id === id)
+    setTask(item[0])
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  return (
+    <>
+      <TodoList {...{select, todo, onChange, handleOpen}}/>
+      <TodoModalDetail {...{open, handleClose}} todo={task} />
+    </>
+  )
 }

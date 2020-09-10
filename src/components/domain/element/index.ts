@@ -1,7 +1,7 @@
 import {CalendarBord}  from './Calendar'
 import {HeaderNav} from './HeaderNav'
 import {Log} from './Log'
-import {TodoEdit, TodoSelected} from './Todo'
+import {TodoEdit, TodoSelected, TodoDetail} from './Todo'
 
 export {
   CalendarBord,
@@ -9,4 +9,5 @@ export {
   Log,
   TodoEdit,
   TodoSelected,
+  TodoDetail,
 }
