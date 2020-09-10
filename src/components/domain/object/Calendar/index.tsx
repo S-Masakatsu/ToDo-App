@@ -18,6 +18,7 @@ interface Props {
     next:     (res: React.BaseSyntheticEvent) => void
   }
   handleOpen: typeFormOpen
+  scheduleOpen: (resID: number) => void
 }
 
 export const Calendar:React.FC<Props> = props => (

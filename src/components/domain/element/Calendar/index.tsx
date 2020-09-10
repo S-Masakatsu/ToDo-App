@@ -110,16 +110,21 @@ const StyledWeek = styled.div<StyledWeekProps>`
 /**
  * Schedule
  */
-const Schedules = (date: typeCalendarDay) => {
+interface SchedulesProps {
+  date:         typeCalendarDay
+  scheduleOpen: (resID: number) => void
+}
+
+const Schedules:React.FC<SchedulesProps> = ({date, scheduleOpen}) => {
   const todo = useSelector((state: typeRootState) => state.todo.todoList)
   const _date = formatDate(date)
   const schedules = todo.filter(i => i.date === _date)
-  if(schedules.length === 0) return
+  if(schedules.length === 0) return <></>
 
   return (
     <LayoutBox width='90%' hasCenter={true}>
       {schedules.map(s => 
-        <StyledSchedule>
+        <StyledSchedule onClick={() => scheduleOpen(s.id)} >
           {s.title}
         </StyledSchedule>  
       )}
@@ -144,15 +149,16 @@ const StyledSchedule = styled.li`
  * Calendar Component
  */
 interface Props {
-  calendar: typeCalendarState
+  calendar:     typeCalendarState
   navigation: {
-    previous: (res: React.BaseSyntheticEvent) => void,
-    next:     (res: React.BaseSyntheticEvent) => void
+    previous:   (res: React.BaseSyntheticEvent) => void,
+    next:       (res: React.BaseSyntheticEvent) => void
   }
-  handleOpen: typeFormOpen
+  handleOpen:   typeFormOpen
+  scheduleOpen: (resID: number) => void
 }
 
-export const CalendarBord:React.FC<Props> = ({calendar, navigation, handleOpen}) => {
+export const CalendarBord:React.FC<Props> = ({calendar, navigation, handleOpen, scheduleOpen}) => {
   const today = dayjs()
   const days: typeCalendar = createCalendar(calendar)
   return (
@@ -165,9 +171,11 @@ export const CalendarBord:React.FC<Props> = ({calendar, navigation, handleOpen})
             <div key={c.toISOString()} onClick={() => handleOpen(c)}>
               <CalendarElement
                 day={c}
-                schedules={Schedules(c)}
                 isToday={isSameDay(c, today)}
                 isCurrentMonth={isSameMonth(c, dayjs(`${calendar.year}-${calendar.month}`))}
+                schedules={
+                  <Schedules date={c}  scheduleOpen={scheduleOpen} />
+                }
               /> 
             </div>
           )}

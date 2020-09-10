@@ -22,7 +22,8 @@ import {YYYYMMDD_hhmm} from '@services/log'
 
 // Utils
 import createMergeProps from '@utils/createMergeProps'
-import {useTodoAddForm} from '@utils/todoForm'
+import {useTodoAddForm, useTodoDetail} from '@utils/todo'
+
 
 /**
  * TodoEdit Container
@@ -84,17 +85,8 @@ export const TodoListContainer:React.FC = () => {
     }
   }))
 
-  const [open, setOpen] = useState<boolean>(false)
-  const [task, setTask] = useState<typeTodo>()
-  const handleOpen = (id: number) => {
-    const item = todoList.filter(i => i.id === id)
-    setTask(item[0])
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
+  // Todo Detail Custom Hooks
+  const {open, task, handleOpen, handleClose} = useTodoDetail()
 
   return (
     <>

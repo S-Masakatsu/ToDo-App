@@ -1,6 +1,6 @@
 /**
- * todo form custom Hooks
- * todoForm utils Hook
+ * todo custom Hooks
+ * todo utils Hook
  */
 import {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
@@ -23,6 +23,10 @@ import {YYYYMMDD_hhmm} from '@services/log'
 // Utils
 import createMergeProps from '@utils/createMergeProps'
 
+
+/**
+ * todo Add form custom Hooks
+ */
 export const useTodoAddForm = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [initDate, setDate] = useState<string>('')
@@ -83,4 +87,26 @@ export const useTodoAddForm = () => {
   })
 
   return {open, form, onSubmit, handleOpen, handleClose}
+}
+
+
+/**
+ * todo detail custom Hooks
+ */
+export const useTodoDetail = () => {
+  const [open, setOpen] = useState<boolean>(false)
+  const [task, setTask] = useState<typeTodo>()
+
+  const todoList = useSelector((state: typeRootState) => state.todo.todoList)
+  const handleOpen = (id: number) => {
+    const item = todoList.filter(i => i.id === id)
+    setTask(item[0])
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  return {task, open, handleOpen, handleClose}
 }
