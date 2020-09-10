@@ -49,7 +49,7 @@ const isFirstDay = (day: typeCalendarDay): boolean => day.date() === 1
 export const formatDay = (day?: typeCalendarDay): string => {
   if(!day) return '1'
   // 月の最初だけ月情報を付与する
-  const format: typeFormat = isFirstDay(day) ? 'M月D日' : 'D'
+  const format: typeFormat = isFirstDay(day) ? 'M/D' : 'D'
   return day.format(format)
 }
 

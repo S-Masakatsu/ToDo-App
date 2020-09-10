@@ -69,7 +69,7 @@ const StyledToday = styled.span`
       display: inline-block;
       background-color: #1a73e8;
       color: #fff;
-      padding: 0 7px;
+      min-width: 20px;
       border-radius: 50%;
     `
   }}

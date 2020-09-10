@@ -28,7 +28,7 @@ export type typeCalendar = typeCalendarDay[]
 /**
  * typeFormat
  */
-export type typeFormat = 'D' | 'M月D日' | 'YYYYMMDD' | 'YYYYMM'
+export type typeFormat = 'D' | 'M月D日' | 'M/D' | 'YYYYMMDD' | 'YYYYMM'
 
 /**
  * typeWeek
