@@ -121,8 +121,18 @@ export const useTodoDelete = () => {
   const handleDelete = (id?: number) => {
     if(!id) return
     const todo = todoList.filter(t => t.id === id)
-    if(window.confirm(`【 ${todo[0].title} 】を削除しても良いですか？`)) {
+    const {title} = todo[0]
+    if(window.confirm(`【 ${title} 】を削除しても良いですか？`)) {
       dispatch(todoAction.deleteTodo(id))
+
+      // Add Delete Log
+      const log: typeLog = {
+        id,
+        title,
+        status: '削除',
+        operatedAt: YYYYMMDD_hhmm()
+      }
+      dispatch(logAction.addOperationLog(log))
     }
   }
 
