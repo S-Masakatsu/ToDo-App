@@ -15,6 +15,9 @@ import {
   TextField
 } from '@gui/parts'
 
+// Utils
+import {useTodoDelete} from '@utils/todo'
+
 // Entity
 import {typeTodo, typeTodoFormItem, typeTodoOption, typeTodoSelectEvent} from '@entity/todo'
 
@@ -25,9 +28,12 @@ import {TODO_LABELS, TODO_OPTIONS} from '@services/todo'
 import {mainColor} from '@assets/js/variables'
 
 // Material-UI
-import AccessTimeIcon from '@material-ui/icons/AccessTime'
-import NotesIcon      from '@material-ui/icons/Notes'
-import CloseIcon      from '@material-ui/icons/Close'
+import {
+  Close,
+  AccessTime,
+  Notes,
+  DeleteOutlineOutlined
+} from '@material-ui/icons'
 
 // Constants
 enum HEADING {
@@ -37,8 +43,8 @@ enum HEADING {
 }
 const LABEL   = 'を追加'
 const ICONS = {
-  DATE:        <AccessTimeIcon />,
-  DESCRIPTION: <NotesIcon />,
+  DATE:        <AccessTime />,
+  DESCRIPTION: <Notes />,
 }
 
 
@@ -46,16 +52,24 @@ const ICONS = {
  * Form Header Component
  */
 interface HeadingProps {
-  title?:  string
-  onClose: React.EffectCallback
+  title?:        string
+  onClose:       React.EffectCallback
+  handleDelete?: React.EffectCallback
 }
-const Heading:React.FC<HeadingProps> = ({title, onClose}) => (
+const Heading:React.FC<HeadingProps> = ({title, onClose, handleDelete}) => (
   <StyledDiv>
     <LayoutFlex>
       <StyledHeading children={title || HEADING.ADD} />
-      <StyledButton onClick={onClose}>
-        <CloseIcon />
-      </StyledButton>
+      <LayoutFlex justify={'flex-end'}>
+        {handleDelete && (
+          <StyledButton onClick={handleDelete}>
+            <DeleteOutlineOutlined />
+          </StyledButton>
+        )}
+        <StyledButton onClick={onClose}>
+          <Close />
+        </StyledButton>
+      </LayoutFlex>
     </LayoutFlex>
   </StyledDiv>
 )
@@ -72,6 +86,9 @@ const StyledHeading = styled.h1`
 const StyledButton = styled.button`
   color: #fff;
   border-radius: 50%;
+  &:last-of-type{
+    margin-left: 10px;
+  }
 `
 
 /**
@@ -175,11 +192,23 @@ interface DetailProps {
 }
 
 export const TodoDetail:React.FC<DetailProps> = ({onClose, todo}) => {
+  const {handleDelete} = useTodoDelete()
   if(!todo) return <></>
+  // Delete Todo
+  const handleClick = (id?: number) => {
+    if(!handleDelete || !id) return
+    handleDelete(id)
+    onClose()
+  }
+  
   return (
     <FieldBlockWrapper
       heading={
-        <Heading {...{onClose}} title={HEADING.DETAIL} />
+        <Heading
+          {...{onClose}}
+          title={HEADING.DETAIL}
+          handleDelete={() => handleClick(todo.id)}
+        />
       } 
     >
       <Layout padding={'15px 15px 0'} margin={'0 0 15px 0'}>

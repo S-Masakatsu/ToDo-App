@@ -110,3 +110,21 @@ export const useTodoDetail = () => {
 
   return {task, open, handleOpen, handleClose}
 }
+
+
+/**
+ * todo delete custom Hooks
+ */
+export const useTodoDelete = () => {
+  const todoList = useSelector((state: typeRootState) => state.todo.todoList)
+  const dispatch = useDispatch()
+  const handleDelete = (id?: number) => {
+    if(!id) return
+    const todo = todoList.filter(t => t.id === id)
+    if(window.confirm(`【 ${todo[0].title} 】を削除しても良いですか？`)) {
+      dispatch(todoAction.deleteTodo(id))
+    }
+  }
+
+  return {handleDelete}
+}
