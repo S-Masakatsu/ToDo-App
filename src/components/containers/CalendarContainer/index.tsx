@@ -26,7 +26,8 @@ import createMergeProps from '@utils/createMergeProps'
 import {
   useTodoAddForm,
   useTodoDetail,
-  useTodoDelete
+  useTodoDelete,
+  useTodoPutForm
 } from '@utils/todo'
 
 
@@ -51,6 +52,9 @@ export const CalendarContainer:React.FC = () => {
   })
 
   const {open, form, onSubmit, handleOpen, handleClose} = useTodoAddForm()
+  const addFormProps = createMergeProps({
+    open, form, onSubmit, handleClose
+  })
 
   // Todo Detail Custom Hooks
   const {
@@ -59,6 +63,10 @@ export const CalendarContainer:React.FC = () => {
     handleOpen: detailHandleOpen,
     handleClose: detailHandleClose
   } = useTodoDetail()
+  const [id, setTodoID] = useState<number>()
+  useEffect(() => {
+    setTodoID(task?.id)
+  }, [task])
 
   // Show Detail to form canceling a modal event
   useEffect(() => {
@@ -82,18 +90,43 @@ export const CalendarContainer:React.FC = () => {
     handleCansell
   })
 
+  // Todo Put Custom Hooks
+  const {
+    open: putOpen,
+    onSubmit: onPutSubmit,
+    form: putForm,
+    handleOpen: handlePutOpen,
+    handleClose: handlePutClose
+  } = useTodoPutForm()
+  const putFormProps = createMergeProps({
+    open: putOpen,
+    form: putForm,
+    onSubmit: onPutSubmit,
+    handleOpen: () => {
+      if(!id) return
+      handlePutOpen(id)
+      detailHandleClose()
+    },
+    handleClose: () => {
+      if(!id) return
+      handlePutClose()
+      detailHandleOpen(id)
+    }
+  })
+
   return (
     <>
       <Calendar
         {...{calendar, navigation, handleOpen}}
         scheduleOpen={detailHandleOpen}
       />
-      <TodoModalEdit {...{open, form, onSubmit, handleClose}} />
+      <TodoModalEdit form={addFormProps} />
       <TodoModalDetail
         {...{delOpen, todoDelete}}
         todo={task}
         open={dOpen}
         handleClose={detailHandleClose}
+        form={putFormProps}
       />
     </>
   )

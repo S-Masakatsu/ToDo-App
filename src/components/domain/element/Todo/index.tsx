@@ -101,24 +101,32 @@ const StyledButton = styled.button`
  * Form Edit Component
  */
 interface Props {
-  onClose:     React.EffectCallback
-  title:       typeTodoFormItem,
-  description: typeTodoFormItem,
-  date:        typeTodoFormItem,
-  onClick:     (res: React.BaseSyntheticEvent) => void
+  onClose: React.EffectCallback
+  isPut?:  boolean
+  form: {
+    title:       typeTodoFormItem,
+    description: typeTodoFormItem,
+    date:        typeTodoFormItem,
+  }
+  onClick: (res: React.BaseSyntheticEvent) => void
 }
-export const TodoEdit:React.FC<Props> = ({onClose, onClick, title, description, date}) => (
-  <FieldBlockWrapper heading={<Heading {...{onClose}}/>} >
+export const TodoEdit:React.FC<Props> = ({onClose, isPut, onClick, form}) => (
+  <FieldBlockWrapper
+    heading={
+      <Heading {...{onClose}} title={isPut ? HEADING.EDIT : undefined} />
+    } 
+  >
     <Layout padding={'0 15px'} margin={'0 0 15px 0'}>
       {/* タイトル */}
       <StyledInputField>
         <TextField
-          name={title.name}
-          inputRef={title.ref}
+          name={form.title.name}
+          inputRef={form.title.ref}
+          defaultValue={form.title.defaultValue}
           label={TODO_LABELS.TITLE}
           placeholder={`${TODO_LABELS.TITLE}${LABEL}`}
-          error={title.error ? true : false}
-          helperText={title.error}
+          error={form.title.error ? true : false}
+          helperText={form.title.error}
           required={true}
         />
       </StyledInputField>
@@ -127,11 +135,11 @@ export const TodoEdit:React.FC<Props> = ({onClose, onClick, title, description, 
       <StyledInputField>
         <TextField
           icon={ICONS.DATE}
-          name={date.name}
+          name={form.date.name}
           type={'date'}
-          defaultValue={date.defaultValue}
+          defaultValue={form.date.defaultValue}
           hasShrink={true}
-          inputRef={date.ref}
+          inputRef={form.date.ref}
           label={TODO_LABELS.DATE}
           placeholder={`${TODO_LABELS.DATE}${LABEL}`}
         />
@@ -141,8 +149,9 @@ export const TodoEdit:React.FC<Props> = ({onClose, onClick, title, description, 
       <StyledInputField>
         <TextField
           icon={ICONS.DESCRIPTION}
-          name={description.name}
-          inputRef={description.ref}
+          name={form.description.name}
+          defaultValue={form.description.defaultValue}
+          inputRef={form.description.ref}
           label={TODO_LABELS.DESCRIPTION}
           placeholder={`${TODO_LABELS.DESCRIPTION}${LABEL}`}
           multiline={true}
@@ -199,9 +208,10 @@ interface DetailProps {
   onClose: React.EffectCallback
   todo?:   typeTodo
   handleDeleteOpen?: React.EffectCallback
+  handlePutOpen?:    React.EffectCallback
 }
 
-export const TodoDetail:React.FC<DetailProps> = ({onClose, todo, handleDeleteOpen}) => {
+export const TodoDetail:React.FC<DetailProps> = ({onClose, todo, handleDeleteOpen, handlePutOpen}) => {
   if(!todo) return <></>
   // Delete Todo
   const handleClick = () => {
@@ -236,7 +246,7 @@ export const TodoDetail:React.FC<DetailProps> = ({onClose, todo, handleDeleteOpe
         )}
 
         <StyledSubmitField>
-          <Button label={'編集'} onClick={() => console.log('更新')} />
+          <Button label={'編集'} onClick={handlePutOpen} />
         </StyledSubmitField>
       </Layout>
     </FieldBlockWrapper>

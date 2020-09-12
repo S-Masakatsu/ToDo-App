@@ -104,9 +104,7 @@ export const useTodoDetail = () => {
     setOpen(true)
   }
 
-  const handleClose = () => {
-    setOpen(false)
-  }
+  const handleClose = () => setOpen(false)
 
   return {task, open, handleOpen, handleClose}
 }
@@ -139,4 +137,77 @@ export const useTodoDelete = () => {
   }
 
   return {open, handleOpen, handleClose, handleDelete}
+}
+
+
+/**
+ * todo Put form custom Hooks
+ */
+export const useTodoPutForm = () => {
+  const [open, setOpen] = useState<boolean>(false)
+  const [todo, setTodo] = useState<typeTodo>({
+    id: 1,
+    title: '',
+    memo: '',
+    date: '',
+    done: false
+  })
+
+  const todoList = useSelector((state: typeRootState) => state.todo.todoList)
+  const handleOpen = (id: number) => {
+    const item = todoList.filter(i => i.id === id)
+    setTodo(item[0])
+    setValue(form.title.name, item[0].title)
+    setOpen(true)
+  }
+  const handleClose = () => setOpen(false)
+
+  // TodoForm
+  const {register, handleSubmit, setValue, errors} = useForm<typeTodo>({
+    reValidateMode: 'onChange'
+  })
+  const form: typeTodoForm = createMergeProps({
+    title: {
+      name: 'title',
+      ref: register({
+        required: true
+      }),
+      defaultValue: todo.title,
+      error: errors.title && 'タイトルが入力されていません'
+    },
+    description: {
+      name: 'memo',
+      defaultValue: todo.memo,
+      ref: register
+    },
+    date: {
+      name: 'date',
+      defaultValue: todo.date,
+      ref: register
+    }
+  })
+
+
+  const dispatch = useDispatch()
+  const onSubmit = handleSubmit((data: typeTodo) => {
+    // Put Todo
+    dispatch(todoAction.putTodo({
+      ...data,
+      id: todo.id,
+      done: todo.done
+    }))
+    // Add Log
+    const {id} = data
+    const log: typeLog = {
+      id,
+      title: todo.title,
+      status: '更新',
+      operatedAt: YYYYMMDD_hhmm()
+    }
+    dispatch(logAction.addOperationLog(log))
+    // Modal Close
+    handleClose()
+  })
+
+  return {open, form, onSubmit, handleOpen, handleClose}
 }

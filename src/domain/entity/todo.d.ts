@@ -15,7 +15,7 @@ type typeDone = {
  */
 type typeDescription = {
   memo: string
-  date: string | null
+  date: string
 }
 
 /**

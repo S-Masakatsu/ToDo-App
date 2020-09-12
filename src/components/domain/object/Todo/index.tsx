@@ -34,7 +34,7 @@ interface TodoListProps {
     onSelectedTodo?: typeTodoSelectEvent
   }
   todo:       typeTodo[]
-  handleOpen: (id: number)    => void,
+  handleOpen: (id: number)    => void
   onChange:   (resID: number) => void
 }
 
@@ -69,6 +69,13 @@ interface TodoDetailProps {
     handleDelete?:  (id?: number | undefined) => void
     handleCansell?: (res?: React.BaseSyntheticEvent) => void
   }
+  form?: {
+    open:        boolean
+    handleOpen:  (res?: React.BaseSyntheticEvent) => void
+    handleClose: (res?: React.BaseSyntheticEvent) => void
+    form:        typeTodoForm
+    onSubmit:    (res?: React.BaseSyntheticEvent) => void
+  }
 }
 
 export const TodoModalDetail:React.FC<TodoDetailProps> = ({
@@ -77,7 +84,11 @@ export const TodoModalDetail:React.FC<TodoDetailProps> = ({
   handleClose,
   delOpen,
   todoDelete,
+  form,
 }) => (
+  form?.open ? 
+  <TodoModalEdit form={form} isPut={true} />
+  :
   <ModalWrapper
     open={open}
     width={`${window.outerWidth * 0.9}px`}
@@ -89,6 +100,7 @@ export const TodoModalDetail:React.FC<TodoDetailProps> = ({
         todo={todo}
         onClose={handleClose}
         handleDeleteOpen={todoDelete?.handleDeleteOpen}
+        handlePutOpen={form?.handleOpen}
       />
     ):(
       <TodoDelete
@@ -104,28 +116,27 @@ export const TodoModalDetail:React.FC<TodoDetailProps> = ({
  * Todo Edit
  */
 interface TodoEditProps {
-  open:        boolean
-  handleClose: (res?: React.BaseSyntheticEvent) => void
-  form:        typeTodoForm
-  onSubmit:    (res?: React.BaseSyntheticEvent) => void
+  isPut?: boolean
+  form: {
+    open:        boolean
+    handleClose: (res?: React.BaseSyntheticEvent) => void
+    form:        typeTodoForm
+    onSubmit:    (res?: React.BaseSyntheticEvent) => void
+  }
 }
 
-export const TodoModalEdit:React.FC<TodoEditProps> = ({
-  open,
-  handleClose,
-  form,
-  onSubmit
-}) => (
+export const TodoModalEdit:React.FC<TodoEditProps> = ({form, isPut}) => (
   <ModalWrapper
-    open={open}
+    open={form.open}
     width={`${window.outerWidth * 0.9}px`}
     ariaLabelledby={'todo-registration-form'}
     ariaDescribedby={'todo-input-form'}
   >
     <TodoEdit
-      {...{...form}}
-      onClose={handleClose}
-      onClick={onSubmit}
+      isPut={isPut}
+      form={form.form}
+      onClose={form.handleClose}
+      onClick={form.onSubmit}
     />
   </ModalWrapper>
 )
@@ -135,11 +146,13 @@ export const TodoModalEdit:React.FC<TodoEditProps> = ({
  * Todo
  */
 interface Props {
-  open:        boolean
   handleOpen:  typeFormOpen
-  handleClose: (res?: React.BaseSyntheticEvent) => void
-  form:        typeTodoForm
-  onSubmit:    (res?: React.BaseSyntheticEvent) => void
+  form: {
+    open:        boolean
+    handleClose: (res?: React.BaseSyntheticEvent) => void
+    form:        typeTodoForm
+    onSubmit:    (res?: React.BaseSyntheticEvent) => void
+  }
 }
 
 export const Todo:React.FC<Props> = props => (

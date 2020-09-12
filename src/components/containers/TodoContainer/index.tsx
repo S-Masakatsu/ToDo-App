@@ -22,7 +22,12 @@ import {YYYYMMDD_hhmm} from '@services/log'
 
 // Utils
 import createMergeProps from '@utils/createMergeProps'
-import {useTodoAddForm, useTodoDetail, useTodoDelete} from '@utils/todo'
+import {
+  useTodoAddForm,
+  useTodoDetail,
+  useTodoDelete,
+  useTodoPutForm
+} from '@utils/todo'
 
 
 /**
@@ -30,7 +35,10 @@ import {useTodoAddForm, useTodoDetail, useTodoDelete} from '@utils/todo'
  */
 export const TodoEditContainer:React.FC = () => {
   const {open, form, onSubmit, handleOpen, handleClose} = useTodoAddForm()
-  return <Todo {...{open, handleOpen, handleClose, form, onSubmit}}/>
+  const formProps = createMergeProps({
+    open, form, onSubmit, handleClose
+  })
+  return <Todo {...{handleOpen}} form={formProps} />
 }
 
 
@@ -86,7 +94,11 @@ export const TodoListContainer:React.FC = () => {
   }))
 
   // Todo Detail Custom Hooks
+  const [id, setTodoID] = useState<number>()
   const {open, task, handleOpen, handleClose} = useTodoDetail()
+  useEffect(() => {
+    setTodoID(task?.id)
+  }, [task])
 
   // Todo Delete Custom Hooks
   const {
@@ -105,10 +117,34 @@ export const TodoListContainer:React.FC = () => {
     handleCansell
   })
 
+  // Todo Put Custom Hooks
+  const {
+    open: putOpen,
+    onSubmit,
+    form: putForm,
+    handleOpen: handlePutOpen,
+    handleClose: handlePutClose
+  } = useTodoPutForm()
+  const form = createMergeProps({
+    open: putOpen,
+    form: putForm,
+    onSubmit,
+    handleOpen: () => {
+      if(!id) return
+      handlePutOpen(id)
+      handleClose()
+    },
+    handleClose: () => {
+      if(!id) return
+      handlePutClose()
+      handleOpen(id)
+    }
+  })
+
   return (
     <>
       <TodoList {...{select, todo, onChange, handleOpen}}/>
-      <TodoModalDetail {...{open, handleClose, delOpen, todoDelete}} todo={task} />
+      <TodoModalDetail {...{open, handleClose, delOpen, todoDelete, form}} todo={task} />
     </>
   )
 }
