@@ -18,6 +18,8 @@ export default reducerWithInitialState(init)
     todoList: state.todoList.map(t => t.id === id ? {...t, done: !t.done} : t)
   }))
   .case(Action.deleteTodo, (state, id) => ({
-    ...state,
     todoList: state.todoList.filter(t => t.id !== id)
+  }))
+  .case(Action.putTodo, (state, payload) => ({
+    todoList: state.todoList.map(t => t.id === payload.id ? {...payload} : t)
   }))
