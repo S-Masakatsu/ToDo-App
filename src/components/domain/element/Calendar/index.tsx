@@ -124,7 +124,7 @@ const Schedules:React.FC<SchedulesProps> = ({date, scheduleOpen}) => {
   return (
     <LayoutBox width='90%' hasCenter={true}>
       {schedules.map(s => 
-        <StyledSchedule onClick={() => scheduleOpen(s.id)} >
+        <StyledSchedule key={s.id} onClick={() => scheduleOpen(s.id)} >
           {s.title}
         </StyledSchedule>  
       )}
