@@ -23,7 +23,11 @@ import {
 
 // Utils
 import createMergeProps from '@utils/createMergeProps'
-import {useTodoAddForm, useTodoDetail} from '@utils/todo'
+import {
+  useTodoAddForm,
+  useTodoDetail,
+  useTodoDelete
+} from '@utils/todo'
 
 
 /**
@@ -61,6 +65,23 @@ export const CalendarContainer:React.FC = () => {
     handleClose()
   }, [dOpen])
 
+  // Todo Delete Custom Hooks
+  const {
+    open: delOpen,
+    handleOpen: handleDeleteOpen,
+    handleDelete: handleTodoDelete,
+    handleClose: handleCansell
+  } = useTodoDelete()
+  const todoDelete = createMergeProps({
+    handleDeleteOpen,
+    handleDelete: (id?: number) => {
+      handleTodoDelete(id)
+      handleCansell()
+      detailHandleClose()
+    },
+    handleCansell
+  })
+
   return (
     <>
       <Calendar
@@ -68,7 +89,12 @@ export const CalendarContainer:React.FC = () => {
         scheduleOpen={detailHandleOpen}
       />
       <TodoModalEdit {...{open, form, onSubmit, handleClose}} />
-      <TodoModalDetail todo={task} open={dOpen} handleClose={detailHandleClose} />
+      <TodoModalDetail
+        {...{delOpen, todoDelete}}
+        todo={task}
+        open={dOpen}
+        handleClose={detailHandleClose}
+      />
     </>
   )
 }

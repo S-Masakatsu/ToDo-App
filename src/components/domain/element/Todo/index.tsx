@@ -15,11 +15,13 @@ import {
   TextField
 } from '@gui/parts'
 
-// Utils
-import {useTodoDelete} from '@utils/todo'
-
 // Entity
-import {typeTodo, typeTodoFormItem, typeTodoOption, typeTodoSelectEvent} from '@entity/todo'
+import {
+  typeTodo,
+  typeTodoFormItem,
+  typeTodoOption,
+  typeTodoSelectEvent
+} from '@entity/todo'
 
 // Services
 import {TODO_LABELS, TODO_OPTIONS} from '@services/todo'
@@ -40,6 +42,7 @@ enum HEADING {
   ADD    = 'ToDoを追加',
   DETAIL = 'ToDoの詳細',
   EDIT   = 'ToDoの編集',
+  DELETE = 'ToDoの削除',
 }
 const LABEL   = 'を追加'
 const ICONS = {
@@ -53,7 +56,7 @@ const ICONS = {
  */
 interface HeadingProps {
   title?:        string
-  onClose:       React.EffectCallback
+  onClose?:      React.EffectCallback
   handleDelete?: React.EffectCallback
 }
 const Heading:React.FC<HeadingProps> = ({title, onClose, handleDelete}) => (
@@ -66,9 +69,11 @@ const Heading:React.FC<HeadingProps> = ({title, onClose, handleDelete}) => (
             <DeleteOutlineOutlined />
           </StyledButton>
         )}
-        <StyledButton onClick={onClose}>
-          <Close />
-        </StyledButton>
+        {onClose && (
+          <StyledButton onClick={onClose}>
+            <Close />
+          </StyledButton>
+        )}
       </LayoutFlex>
     </LayoutFlex>
   </StyledDiv>
@@ -83,6 +88,7 @@ const StyledHeading = styled.h1`
   color: #fff;
   font-size: 1.3rem;
 `
+
 const StyledButton = styled.button`
   color: #fff;
   border-radius: 50%;
@@ -156,6 +162,9 @@ const StyledInputField = styled.div`
 const StyledSubmitField = styled.div`
   margin-top: 12px;
   text-align: right;
+  button:last-of-type{
+    margin-left: 10px;
+  }
 `
 
 /**
@@ -189,16 +198,15 @@ export const TodoSelected:React.FC<SelectedProps> = ({selected, onSelectedTodo})
 interface DetailProps {
   onClose: React.EffectCallback
   todo?:   typeTodo
+  handleDeleteOpen?: React.EffectCallback
 }
 
-export const TodoDetail:React.FC<DetailProps> = ({onClose, todo}) => {
-  const {handleDelete} = useTodoDelete()
+export const TodoDetail:React.FC<DetailProps> = ({onClose, todo, handleDeleteOpen}) => {
   if(!todo) return <></>
   // Delete Todo
-  const handleClick = (id?: number) => {
-    if(!handleDelete || !id) return
-    handleDelete(id)
-    onClose()
+  const handleClick = () => {
+    if(!handleDeleteOpen) return
+    handleDeleteOpen()
   }
   
   return (
@@ -207,7 +215,7 @@ export const TodoDetail:React.FC<DetailProps> = ({onClose, todo}) => {
         <Heading
           {...{onClose}}
           title={HEADING.DETAIL}
-          handleDelete={() => handleClick(todo.id)}
+          handleDelete={handleClick}
         />
       } 
     >
@@ -239,3 +247,47 @@ const StyledDescription = styled.p`
   margin-left: 10px;
   white-space: pre-wrap;
 `
+
+
+/**
+ * Todo Delete yes no Modal
+ */
+interface DeleteProps {
+  todo?:   typeTodo
+  handleDelete?:  (id?: number | undefined) => void
+  handleCansell?: (res?: React.BaseSyntheticEvent) => void
+}
+
+export const TodoDelete:React.FC<DeleteProps> = ({todo, handleDelete, handleCansell}) => {
+  if(!todo) return <></>
+
+  const handleNoClick = () => {
+    if(!handleCansell) return
+    handleCansell()
+  }
+
+  const handleYesClick = () => {
+    if(!handleDelete) return
+    handleDelete(todo.id)
+  }
+  
+  return (
+    <FieldBlockWrapper
+      heading={
+        <Heading title={HEADING.DELETE} />
+      } 
+    >
+      <Layout padding={'15px 15px 0'} margin={'0 0 15px 0'}>
+        <ListItem title={todo.title} fontSize={'1.5rem'} />
+        <p>を削除してもよろしいですか？</p>
+       
+        <LayoutFlex justify={'flex-end'}>
+          <StyledSubmitField>
+            <Button label={'CANSELL'} onClick={handleNoClick} />
+            <Button label={'DELETE'} onClick={handleYesClick} />
+          </StyledSubmitField>
+        </LayoutFlex>
+      </Layout>
+    </FieldBlockWrapper>
+  )
+}

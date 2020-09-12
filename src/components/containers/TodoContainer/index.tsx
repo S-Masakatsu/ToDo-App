@@ -22,7 +22,7 @@ import {YYYYMMDD_hhmm} from '@services/log'
 
 // Utils
 import createMergeProps from '@utils/createMergeProps'
-import {useTodoAddForm, useTodoDetail} from '@utils/todo'
+import {useTodoAddForm, useTodoDetail, useTodoDelete} from '@utils/todo'
 
 
 /**
@@ -88,10 +88,27 @@ export const TodoListContainer:React.FC = () => {
   // Todo Detail Custom Hooks
   const {open, task, handleOpen, handleClose} = useTodoDetail()
 
+  // Todo Delete Custom Hooks
+  const {
+    open: delOpen,
+    handleOpen: handleDeleteOpen,
+    handleDelete: handleTodoDelete,
+    handleClose: handleCansell
+  } = useTodoDelete()
+  const todoDelete = createMergeProps({
+    handleDeleteOpen,
+    handleDelete: (id?: number) => {
+      handleTodoDelete(id)
+      handleCansell()
+      handleClose()
+    },
+    handleCansell
+  })
+
   return (
     <>
       <TodoList {...{select, todo, onChange, handleOpen}}/>
-      <TodoModalDetail {...{open, handleClose}} todo={task} />
+      <TodoModalDetail {...{open, handleClose, delOpen, todoDelete}} todo={task} />
     </>
   )
 }

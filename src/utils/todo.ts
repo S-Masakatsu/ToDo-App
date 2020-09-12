@@ -116,25 +116,27 @@ export const useTodoDetail = () => {
  * todo delete custom Hooks
  */
 export const useTodoDelete = () => {
+  const [open, setOpen] = useState<boolean>(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
+
   const todoList = useSelector((state: typeRootState) => state.todo.todoList)
   const dispatch = useDispatch()
   const handleDelete = (id?: number) => {
     if(!id) return
     const todo = todoList.filter(t => t.id === id)
     const {title} = todo[0]
-    if(window.confirm(`【 ${title} 】を削除しても良いですか？`)) {
-      dispatch(todoAction.deleteTodo(id))
+    dispatch(todoAction.deleteTodo(id))
 
-      // Add Delete Log
-      const log: typeLog = {
-        id,
-        title,
-        status: '削除',
-        operatedAt: YYYYMMDD_hhmm()
-      }
-      dispatch(logAction.addOperationLog(log))
+    // Add Delete Log
+    const log: typeLog = {
+      id,
+      title,
+      status: '削除',
+      operatedAt: YYYYMMDD_hhmm()
     }
+    dispatch(logAction.addOperationLog(log))
   }
 
-  return {handleDelete}
+  return {open, handleOpen, handleClose, handleDelete}
 }

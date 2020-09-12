@@ -5,8 +5,13 @@
 import React from 'react'
 
 // Components
-import {LayoutBox}     from '@layouts'
-import {TodoEdit, TodoSelected, TodoDetail}  from '@domain/element'
+import {LayoutBox} from '@layouts'
+import {
+  TodoEdit,
+  TodoSelected,
+  TodoDetail,
+  TodoDelete
+} from '@domain/element'
 import {ModalWrapper, OpenButton} from '@gui/parts'
 import {ListCheckItem} from '@gui/groups'
 
@@ -58,12 +63,20 @@ interface TodoDetailProps {
   open:        boolean
   todo?:       typeTodo
   handleClose: (res?: React.BaseSyntheticEvent) => void
+  delOpen?:    boolean
+  todoDelete?: {
+    handleDeleteOpen?: (res?: React.BaseSyntheticEvent) => void
+    handleDelete?:  (id?: number | undefined) => void
+    handleCansell?: (res?: React.BaseSyntheticEvent) => void
+  }
 }
 
 export const TodoModalDetail:React.FC<TodoDetailProps> = ({
   open,
   todo,
   handleClose,
+  delOpen,
+  todoDelete,
 }) => (
   <ModalWrapper
     open={open}
@@ -71,10 +84,18 @@ export const TodoModalDetail:React.FC<TodoDetailProps> = ({
     ariaLabelledby={'todo-registration-detail'}
     ariaDescribedby={'todo-detail'}
   >
-    <TodoDetail
-      todo={todo}
-      onClose={handleClose}
-    />
+    {!delOpen ? (
+      <TodoDetail
+        todo={todo}
+        onClose={handleClose}
+        handleDeleteOpen={todoDelete?.handleDeleteOpen}
+      />
+    ):(
+      <TodoDelete
+        todo={todo}
+        {...todoDelete}
+      />
+    )}
   </ModalWrapper>
 )
 
