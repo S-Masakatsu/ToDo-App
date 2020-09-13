@@ -12,7 +12,12 @@ import styled from 'styled-components'
 
 // Components
 import {LayoutFlex} from '@layouts'
-import {CheckBox, ListItem, TagItem} from '@gui/parts'
+import {CheckBox, ListItem, RadiusBoxWrapper, TagItem} from '@gui/parts'
+
+// Constants
+const LAYOUT_OPTION = {
+  PADDING: {top: true, bottom: true}
+}
 
 interface Props {
   id:            string
@@ -24,7 +29,7 @@ interface Props {
 }
 
 export const ListCheckItem:React.FC<Props> = ({id, title, date, checked, onChange, onClick}) => (
-  <StyledWrapper>
+  <RadiusBoxWrapper hasPadding={LAYOUT_OPTION.PADDING}>
     <LayoutFlex justify={'start'}>
       <StyledDone>
         <CheckBox
@@ -39,18 +44,8 @@ export const ListCheckItem:React.FC<Props> = ({id, title, date, checked, onChang
         </ListItem>
       </StyledItem>
     </LayoutFlex>
-  </StyledWrapper>
+  </RadiusBoxWrapper>
 )
-
-const StyledWrapper = styled.div`
-  margin: 8px auto 0;
-  padding-right: 20px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  border: 1px solid #dee2e6;
-  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
-  border-radius: .25rem;
-`
 
 const StyledDone = styled.div`
   margin-right: 8px;

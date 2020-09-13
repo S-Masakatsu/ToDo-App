@@ -6,6 +6,7 @@ import {ListItem}          from './ListItem'
 import {ModalWrapper}      from './ModalWrapper'
 import {NavBar}            from './NavBar'
 import {OpenButton}        from './OpenButton'
+import {RadiusBoxWrapper}  from './RadiusBoxWrapper'
 import {ScreenWrapper}     from './ScreenWrapper'
 import {SelectBox}         from './SelectBox'
 import {Table}             from './Table'
@@ -21,6 +22,7 @@ export {
   ModalWrapper,
   NavBar,
   OpenButton,
+  RadiusBoxWrapper,
   ScreenWrapper,
   SelectBox,
   Table,
