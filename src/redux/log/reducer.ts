@@ -17,3 +17,4 @@ export default reducerWithInitialState(init)
     ...state,
     logList: [...state.logList, payload]
   }))
+  .case(Action.initOperationLog, () => ({...init}))

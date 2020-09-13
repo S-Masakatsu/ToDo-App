@@ -15,4 +15,5 @@ export default {
   doneTodo:   actionCreator<number>(Type.DONE_TODO),
   deleteTodo: actionCreator<number>(Type.DELETE_TODO),
   putTodo:    actionCreator<typeTodo>(Type.PUT_TODO),
+  initTodo:   actionCreator(Type.INIT_TODO),
 }

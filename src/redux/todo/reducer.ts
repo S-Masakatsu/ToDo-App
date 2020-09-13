@@ -23,3 +23,4 @@ export default reducerWithInitialState(init)
   .case(Action.putTodo, (state, payload) => ({
     todoList: state.todoList.map(t => t.id === payload.id ? {...payload} : t)
   }))
+  .case(Action.initTodo, () => ({...init}))
