@@ -293,8 +293,8 @@ export const TodoDelete:React.FC<DeleteProps> = ({todo, handleDelete, handleCans
        
         <LayoutFlex justify={'flex-end'}>
           <StyledSubmitField>
-            <Button label={'CANSELL'} onClick={handleNoClick} />
-            <Button label={'DELETE'} onClick={handleYesClick} />
+            <Button label='CANSELL' thema='danger'  onClick={handleNoClick} />
+            <Button label='DELETE'  thema='success' onClick={handleYesClick} />
           </StyledSubmitField>
         </LayoutFlex>
       </Layout>
