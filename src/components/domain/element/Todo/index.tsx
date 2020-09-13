@@ -10,6 +10,7 @@ import {Layout, LayoutFlex} from '@layouts'
 import {
   Button,
   FieldBlockWrapper,
+  ModalHeader,
   ListItem,
   SelectBox,
   TextField
@@ -26,16 +27,8 @@ import {
 // Services
 import {TODO_LABELS, TODO_OPTIONS} from '@services/todo'
 
-// Assets
-import {mainColor} from '@assets/js/variables'
-
 // Material-UI
-import {
-  Close,
-  AccessTime,
-  Notes,
-  DeleteOutlineOutlined
-} from '@material-ui/icons'
+import {AccessTime, Notes} from '@material-ui/icons'
 
 // Constants
 enum HEADING {
@@ -50,52 +43,6 @@ const ICONS = {
   DESCRIPTION: <Notes />,
 }
 
-
-/**
- * Form Header Component
- */
-interface HeadingProps {
-  title?:        string
-  onClose?:      React.EffectCallback
-  handleDelete?: React.EffectCallback
-}
-const Heading:React.FC<HeadingProps> = ({title, onClose, handleDelete}) => (
-  <StyledDiv>
-    <LayoutFlex>
-      <StyledHeading children={title || HEADING.ADD} />
-      <LayoutFlex justify={'flex-end'}>
-        {handleDelete && (
-          <StyledButton onClick={handleDelete}>
-            <DeleteOutlineOutlined />
-          </StyledButton>
-        )}
-        {onClose && (
-          <StyledButton onClick={onClose}>
-            <Close />
-          </StyledButton>
-        )}
-      </LayoutFlex>
-    </LayoutFlex>
-  </StyledDiv>
-)
-
-const StyledDiv = styled.div`
-  background-color: ${mainColor};
-  border-radius: 8px 8px 0 0;
-  padding: 10px 15px;
-`
-const StyledHeading = styled.h1`
-  color: #fff;
-  font-size: 1.3rem;
-`
-
-const StyledButton = styled.button`
-  color: #fff;
-  border-radius: 50%;
-  &:last-of-type{
-    margin-left: 10px;
-  }
-`
 
 /**
  * Form Edit Component
@@ -113,7 +60,7 @@ interface Props {
 export const TodoEdit:React.FC<Props> = ({onClose, isPut, onClick, form}) => (
   <FieldBlockWrapper
     heading={
-      <Heading {...{onClose}} title={isPut ? HEADING.EDIT : undefined} />
+      <ModalHeader {...{onClose}} title={isPut ? HEADING.EDIT : HEADING.ADD} />
     } 
   >
     <Layout padding={'0 15px'} margin={'0 0 15px 0'}>
@@ -222,7 +169,7 @@ export const TodoDetail:React.FC<DetailProps> = ({onClose, todo, handleDeleteOpe
   return (
     <FieldBlockWrapper
       heading={
-        <Heading
+        <ModalHeader
           {...{onClose}}
           title={HEADING.DETAIL}
           handleDelete={handleClick}
@@ -284,7 +231,7 @@ export const TodoDelete:React.FC<DeleteProps> = ({todo, handleDelete, handleCans
   return (
     <FieldBlockWrapper
       heading={
-        <Heading title={HEADING.DELETE} />
+        <ModalHeader title={HEADING.DELETE} />
       } 
     >
       <Layout padding={'15px 15px 0'} margin={'0 0 15px 0'}>
