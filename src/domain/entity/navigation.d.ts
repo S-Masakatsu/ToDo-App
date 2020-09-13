@@ -5,11 +5,13 @@ import {ReactNode} from 'react'
  * @primary @type {string} ページタイトル
  * @icon    @type {ReactNode} Icon component
  * @to      @type {string} path
+ * @divider @type {boolean} 区切り線
  */
 type typeNav = {
-  primary: string,
-  icon:    ReactNode,
-  to:      string,
+  primary?: string,
+  icon?:    ReactNode,
+  to?:      string,
+  divider?: boolean, 
 }
 
 /**

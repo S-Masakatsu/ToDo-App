@@ -152,6 +152,9 @@ const NavDrawer:React.FC<NaviDrawerProps> = ({open, onClick, listItems}) => {
       <Divider />
       <List>
         {listItems.map((p, i) => (
+          p.divider ? 
+          <Divider component='li' />
+          :
           <ListItemLink {...p} onClick={onClick} key={i} />
         ))}
       </List>
@@ -161,16 +164,16 @@ const NavDrawer:React.FC<NaviDrawerProps> = ({open, onClick, listItems}) => {
 
 
 interface ListItemProps {
-  icon:    React.ReactNode
-  primary: String
-  to:      string
-  onClick: React.EffectCallback
+  icon?:    React.ReactNode
+  primary?: String
+  to?:      string
+  onClick:  React.EffectCallback
 }
 const ListItemLink:React.FC<ListItemProps> = ({icon, primary, to, onClick}) => {
   const classes = useStyles()
   const CustomLink = useMemo(() =>
     forwardRef(linkProps => (
-      <Link to={to} {...linkProps} />
+      <Link to={to || '/'} {...linkProps} />
     )
   ),[to])
 

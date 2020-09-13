@@ -10,7 +10,8 @@ import {Provider} from 'react-redux'
 import {
   HomeScreen,
   CalendarScreen,
-  LogScreen
+  LogScreen,
+  ConfigScreen,
 } from '@screens'
 
 // Element
@@ -44,6 +45,10 @@ export default () => (
         <Route
           path={PATH_PAGES.LOG}
           render={() => <Page title='操作履歴' children={<LogScreen />}/> }
+        />
+        <Route
+          path={PATH_PAGES.CONFIG}
+          render={() => <Page title='設定' children={<ConfigScreen />}/> }
         />
       </Switch>
     </BrowserRouter>

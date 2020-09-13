@@ -14,9 +14,12 @@ import {typePages} from '@entity/navigation'
 import {MAIN_PAGES, PATH_PAGES} from '@services/pages'
 
 // Material-UI
-import ListAltIcon   from '@material-ui/icons/ListAlt'
-import HistoryIcon   from '@material-ui/icons/History'
-import DateRangeIcon from '@material-ui/icons/DateRange'
+import {
+  ListAlt   as ListAltIcon,
+  History   as HistoryIcon,
+  DateRange as DateRangeIcon,
+  Settings  as SettingsIcon,
+} from '@material-ui/icons'
 
 // Constants
 const PAGES: typePages = [
@@ -34,6 +37,14 @@ const PAGES: typePages = [
     primary: MAIN_PAGES.LOG,
     icon: <HistoryIcon />,
     to: PATH_PAGES.LOG,
+  },
+  {
+    divider: true
+  },
+  {
+    primary: MAIN_PAGES.CONFIG,
+    icon: <SettingsIcon />,
+    to: PATH_PAGES.CONFIG,
   },
 ]
 
