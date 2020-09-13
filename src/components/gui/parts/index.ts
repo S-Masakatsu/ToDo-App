@@ -3,6 +3,7 @@ import {CalendarElement}   from './CalendarElement'
 import {CheckBox}          from './CheckBox'
 import {FieldBlockWrapper} from './FieldBlockWrapper'
 import {ListItem}          from './ListItem'
+import {ModalHeader}       from './ModalHeader'
 import {ModalWrapper}      from './ModalWrapper'
 import {NavBar}            from './NavBar'
 import {OpenButton}        from './OpenButton'
@@ -19,6 +20,7 @@ export {
   CheckBox,
   FieldBlockWrapper,
   ListItem,
+  ModalHeader,
   ModalWrapper,
   NavBar,
   OpenButton,

@@ -85,32 +85,35 @@ export const TodoModalDetail:React.FC<TodoDetailProps> = ({
   delOpen,
   todoDelete,
   form,
-}) => (
-  form?.open ? 
-  <TodoModalEdit form={form} isPut={true} />
-  :
-  <ModalWrapper
-    open={open}
-    width={`${window.outerWidth * 0.9}px`}
-    ariaLabelledby={'todo-registration-detail'}
-    ariaDescribedby={'todo-detail'}
-  >
-    {!delOpen ? (
+}) => {
+  // 編集
+  if(form?.open) return <TodoModalEdit form={form} isPut={true} />
+  // 削除
+  if(delOpen) return (
+    <TodoDelete
+      open={delOpen}
+      todo={todo}
+      {...todoDelete}
+    />
+  )
+
+  // 詳細
+  return(
+    <ModalWrapper
+      open={open}
+      width={`${window.outerWidth * 0.9}px`}
+      ariaLabelledby={'todo-registration-detail'}
+      ariaDescribedby={'todo-detail'}
+    >
       <TodoDetail
         todo={todo}
         onClose={handleClose}
         handleDeleteOpen={todoDelete?.handleDeleteOpen}
         handlePutOpen={form?.handleOpen}
       />
-    ):(
-      <TodoDelete
-        todo={todo}
-        {...todoDelete}
-      />
-    )}
-  </ModalWrapper>
-)
-
+    </ModalWrapper>
+  )
+}
 
 /**
  * Todo Edit

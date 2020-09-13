@@ -15,6 +15,7 @@ import {
   SelectBox,
   TextField
 } from '@gui/parts'
+import {ModalConfirm} from '@gui/groups'
 
 // Entity
 import {
@@ -210,13 +211,14 @@ const StyledDescription = styled.p`
  * Todo Delete yes no Modal
  */
 interface DeleteProps {
+  open?:   boolean
   todo?:   typeTodo
   handleDelete?:  (id?: number | undefined) => void
   handleCansell?: (res?: React.BaseSyntheticEvent) => void
 }
 
-export const TodoDelete:React.FC<DeleteProps> = ({todo, handleDelete, handleCansell}) => {
-  if(!todo) return <></>
+export const TodoDelete:React.FC<DeleteProps> = ({open, todo, handleDelete, handleCansell}) => {
+  if(!todo || !open) return <></>
 
   const handleNoClick = () => {
     if(!handleCansell) return
@@ -229,22 +231,12 @@ export const TodoDelete:React.FC<DeleteProps> = ({todo, handleDelete, handleCans
   }
   
   return (
-    <FieldBlockWrapper
-      heading={
-        <ModalHeader title={HEADING.DELETE} />
-      } 
-    >
-      <Layout padding={'15px 15px 0'} margin={'0 0 15px 0'}>
-        <ListItem title={todo.title} fontSize={'1.5rem'} />
-        <p>を削除してもよろしいですか？</p>
-       
-        <LayoutFlex justify={'flex-end'}>
-          <StyledSubmitField>
-            <Button label='CANSELL' thema='danger'  onClick={handleNoClick} />
-            <Button label='DELETE'  thema='success' onClick={handleYesClick} />
-          </StyledSubmitField>
-        </LayoutFlex>
-      </Layout>
-    </FieldBlockWrapper>
+    <ModalConfirm
+      open={open}
+      header={HEADING.DELETE}
+      item={todo.title}
+      onCansell={handleNoClick}
+      onSuccess={handleYesClick}
+    />
   )
 }
