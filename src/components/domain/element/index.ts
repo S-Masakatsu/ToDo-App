@@ -1,4 +1,5 @@
 import {CalendarBord} from './Calendar'
+import {ConfigDeleteElement} from './Config'
 import {HeaderNav}    from './HeaderNav'
 import {Log}          from './Log'
 import {
@@ -10,6 +11,7 @@ import {
 
 export {
   CalendarBord,
+  ConfigDeleteElement,
   HeaderNav,
   Log,
   TodoEdit,

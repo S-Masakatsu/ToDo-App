@@ -5,10 +5,14 @@
 import React from 'react'
 
 // Components
+import {LayoutBox} from '@layouts'
 import {ScreenWrapper} from '@gui/parts'
+import {ConfigDeleteContainer} from '@containers'
 
 export const ConfigScreen:React.FC = () => (
-  <ScreenWrapper>
-    <h1>設定</h1>
-  </ScreenWrapper>
+  <LayoutBox hasCenter={true} maxWidth='800px'>
+    <ScreenWrapper pageTitle='設定'>
+      <ConfigDeleteContainer />
+    </ScreenWrapper>
+  </LayoutBox>
 )

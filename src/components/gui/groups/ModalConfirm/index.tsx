@@ -35,8 +35,8 @@ export const ModalConfirm:React.FC<Props> = ({open, header, item, desc, onCansel
       heading={<ModalHeader title={header || '確認してください'} />}
     >
       <Layout padding={'15px 15px 0'} margin={'0 0 15px 0'}>
-        <ListItem title={item || '内容'} fontSize={'1.5rem'} />
-        <p>{desc || 'を削除してもよろしいですか？'}</p>
+        <ListItem title={item ?? '内容'} fontSize={'1.5rem'} />
+        <p>{desc || '削除してもよろしいですか？'}</p>
        
         <LayoutFlex justify={'flex-end'}>
           <StyledSubmitField>
