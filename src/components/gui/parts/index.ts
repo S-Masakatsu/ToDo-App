@@ -13,6 +13,7 @@ import {SelectBox}         from './SelectBox'
 import {Table}             from './Table'
 import {TagItem}           from './TagItem'
 import {TextField}         from './TextField'
+import {Toast}             from './Toast'
 
 export {
   Button,
@@ -30,4 +31,5 @@ export {
   Table,
   TagItem,
   TextField,
+  Toast,
 }

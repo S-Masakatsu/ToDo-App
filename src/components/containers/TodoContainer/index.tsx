@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux'
 
 // Components
 import {Todo, TodoList, TodoModalDetail} from '@domain/object'
+import {Toast} from '@gui/parts'
 
 // Redux Action
 import todoAction from '@redux/todo/actions'
@@ -28,17 +29,49 @@ import {
   useTodoDelete,
   useTodoPutForm
 } from '@utils/todo'
+import {useAlert, typeUseAlert} from '@utils/alert'
 
 
 /**
  * TodoEdit Container
  */
 export const TodoEditContainer:React.FC = () => {
+  const {
+    open: alertOpen,
+    color,
+    severity,
+    message,
+    setMessage,
+    handleOpen: handleAlertOpen,
+    handleClose: handleAlertClose,
+  } = useAlert()
   const {open, form, onSubmit, handleOpen, handleClose} = useTodoAddForm()
+  
   const formProps = createMergeProps({
-    open, form, onSubmit, handleClose
+    open,
+    form,
+    onSubmit: () => {
+      onSubmit()
+      if(setMessage) setMessage('ToDoを追加しました。')
+      if(handleAlertOpen) handleAlertOpen('追加')
+    },
+    handleClose,
   })
-  return <Todo {...{handleOpen}} form={formProps} />
+
+  const alert: typeUseAlert = createMergeProps({
+    open: alertOpen,
+    message,
+    severity,
+    color,
+    handleClose: handleAlertClose
+  })
+
+  return (
+    <>
+      <Todo {...{handleOpen}} form={formProps} />
+      <Toast {...alert}/>
+    </>
+  )
 }
 
 
@@ -68,19 +101,43 @@ export const TodoListContainer:React.FC = () => {
     }
   }, [todoList, selected, idList])
 
+  // Toast
+  const {
+    open: alertOpen,
+    color,
+    severity,
+    message,
+    setMessage,
+    handleOpen: handleAlertOpen,
+    handleClose: handleAlertClose,
+  } = useAlert()
+  const alert: typeUseAlert = createMergeProps({
+    open: alertOpen,
+    message,
+    severity,
+    color,
+    handleClose: handleAlertClose
+  })
+  
+
   // Todo Done Event
   const dispatch = useDispatch()
   const onChange = (resID: number) => {
     setID([...idList, resID])
     dispatch(todoAction.doneTodo(resID))
     const t = todoList.filter(t => t.id === resID)[0]
+    const status = t.done ? '未完了' : '完了'
     const log: typeLog = {
       id: t.id,
       title: t.title,
-      status: t.done ? '未完了' : '完了',
+      status,
       operatedAt: YYYYMMDD_hhmm()
     }
     dispatch(logAction.addOperationLog(log))
+    if(handleAlertOpen && setMessage) {
+      handleAlertOpen(status)
+      setMessage(`${t.title} を${status}にしました。`)
+    }
   }
 
   // Todo Show Select Event
@@ -113,6 +170,11 @@ export const TodoListContainer:React.FC = () => {
       handleTodoDelete(id)
       handleCansell()
       handleClose()
+      if(handleAlertOpen && setMessage) {
+        handleAlertOpen('削除')
+        const todo = todoList.filter(i => i.id === id)
+        setMessage(`${todo[0].title} を削除しました。`)
+      }
     },
     handleCansell
   })
@@ -128,7 +190,14 @@ export const TodoListContainer:React.FC = () => {
   const form = createMergeProps({
     open: putOpen,
     form: putForm,
-    onSubmit,
+    onSubmit: () => {
+      onSubmit()
+      if(handleAlertOpen && setMessage) {
+        handleAlertOpen('更新')
+        const todo = todoList.filter(i => i.id === id)
+        setMessage(`${todo[0].title} を更新しました。`)
+      }
+    },
     handleOpen: () => {
       if(!id) return
       handlePutOpen(id)
@@ -145,6 +214,7 @@ export const TodoListContainer:React.FC = () => {
     <>
       <TodoList {...{select, todo, onChange, handleOpen}}/>
       <TodoModalDetail {...{open, handleClose, delOpen, todoDelete, form}} todo={task} />
+      <Toast {...alert}/>
     </>
   )
 }

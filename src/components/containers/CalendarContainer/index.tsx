@@ -2,6 +2,7 @@
  * CalendarContainer
  */
 import React, {useState, useEffect} from 'react'
+import {useSelector} from 'react-redux'
 import dayjs from 'dayjs'
 
 // Components
@@ -13,6 +14,8 @@ import {
 
 // Entity
 import {typeCalendarState} from '@entity/calendar'
+import {Toast} from '@gui/parts'
+import {typeRootState} from '@entity/rootState'
 
 // Serives
 import {
@@ -29,6 +32,7 @@ import {
   useTodoDelete,
   useTodoPutForm
 } from '@utils/todo'
+import {useAlert, typeUseAlert} from '@utils/alert'
 
 
 /**
@@ -38,22 +42,44 @@ export const CalendarContainer:React.FC = () => {
   const day = dayjs()
   const [calendar, setCalendar] = useState<typeCalendarState>(formatState(day))
 
-  const handlePreviousMonth = () => {
-    setCalendar(getPreviousMonth)
-  }
+  const handlePreviousMonth = () => setCalendar(getPreviousMonth)
 
-  const handleNextMonth = () => {
-    setCalendar(getNextMonth)
-  }
+  const handleNextMonth = () => setCalendar(getNextMonth)
 
   const navigation = createMergeProps({
     previous: handlePreviousMonth,
     next: handleNextMonth
   })
 
+  // Toast Custom Hooks
+  const {
+    open: alertOpen,
+    color,
+    severity,
+    message,
+    setMessage,
+    handleOpen: handleAlertOpen,
+    handleClose: handleAlertClose,
+  } = useAlert()
+  const alert: typeUseAlert = createMergeProps({
+    open: alertOpen,
+    message,
+    severity,
+    color,
+    handleClose: handleAlertClose
+  })
+
+  // Todo Add Custom Hooks
   const {open, form, onSubmit, handleOpen, handleClose} = useTodoAddForm()
   const addFormProps = createMergeProps({
-    open, form, onSubmit, handleClose
+    open,
+    form,
+    onSubmit: () => {
+      onSubmit()
+      if(setMessage) setMessage('ToDoを追加しました。')
+      if(handleAlertOpen) handleAlertOpen('追加')
+    },
+    handleClose,
   })
 
   // Todo Detail Custom Hooks
@@ -73,6 +99,8 @@ export const CalendarContainer:React.FC = () => {
     handleClose()
   }, [dOpen])
 
+  const todoList = useSelector((state: typeRootState) => state.todo.todoList)
+
   // Todo Delete Custom Hooks
   const {
     open: delOpen,
@@ -86,6 +114,11 @@ export const CalendarContainer:React.FC = () => {
       handleTodoDelete(id)
       handleCansell()
       detailHandleClose()
+      if(handleAlertOpen && setMessage) {
+        handleAlertOpen('削除')
+        const todo = todoList.filter(i => i.id === id)
+        setMessage(`${todo[0].title} を削除しました。`)
+      }
     },
     handleCansell
   })
@@ -101,7 +134,14 @@ export const CalendarContainer:React.FC = () => {
   const putFormProps = createMergeProps({
     open: putOpen,
     form: putForm,
-    onSubmit: onPutSubmit,
+    onSubmit: () => {
+      onPutSubmit()
+      if(handleAlertOpen && setMessage) {
+        handleAlertOpen('更新')
+        const todo = todoList.filter(i => i.id === id)
+        setMessage(`${todo[0].title} を更新しました。`)
+      }
+    },
     handleOpen: () => {
       if(!id) return
       handlePutOpen(id)
@@ -128,6 +168,7 @@ export const CalendarContainer:React.FC = () => {
         handleClose={detailHandleClose}
         form={putFormProps}
       />
+      <Toast {...alert}/>
     </>
   )
 }

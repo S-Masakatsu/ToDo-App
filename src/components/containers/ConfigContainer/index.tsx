@@ -10,6 +10,7 @@ import logAction  from '@redux/log/actions'
 
 // Components
 import {ConfigDeleteObject} from '@domain/object'
+import {Toast} from '@gui/parts'
 
 // Entity
 import {typeDeleteConfirmOpen} from '@entity/config'
@@ -19,6 +20,7 @@ import {DELETE_LIST} from '@services/config'
 
 // Utils
 import createMergeProps from '@utils/createMergeProps'
+import {useAlert, typeUseAlert} from '@utils/alert'
 
 
 /**
@@ -41,6 +43,7 @@ export const ConfigDeleteContainer:React.FC = () => {
     setHasDelete(type)
     setOpen(true)
   }
+  
   const dispatch = useDispatch()
   const props = createMergeProps({
     open,
@@ -49,16 +52,47 @@ export const ConfigDeleteContainer:React.FC = () => {
       item,
       onCansell: () => setOpen(false),
       onSuccess: () => {
-        if(hasDelete === 'todo') dispatch(todoAction.initTodo())
-        if(hasDelete === 'log') dispatch(logAction.initOperationLog())
-        if(hasDelete === 'all') {
+        if(hasDelete === 'todo' && setMessage) {
+          dispatch(todoAction.initTodo())
+          setMessage('ToDoをすべて削除しました。')
+        }
+        if(hasDelete === 'log' && setMessage) {
+          dispatch(logAction.initOperationLog())
+          setMessage('操作履歴をすべて削除しました。')
+        }
+        if(hasDelete === 'all' && setMessage) {
           dispatch(todoAction.initTodo())
           dispatch(logAction.initOperationLog())
+          setMessage('すべての記録を削除しました。')
         }
         setOpen(false)
+        if(handleAlertOpen) handleAlertOpen('削除')
       }
     },
   })
 
-  return <ConfigDeleteObject {...props} />
+  // Toast Custom Hooks
+  const {
+    open: alertOpen,
+    color,
+    severity,
+    message,
+    setMessage,
+    handleOpen: handleAlertOpen,
+    handleClose: handleAlertClose,
+  } = useAlert()
+  const alert: typeUseAlert = createMergeProps({
+    open: alertOpen,
+    message,
+    severity,
+    color,
+    handleClose: handleAlertClose
+  })
+
+  return (
+    <>
+      <ConfigDeleteObject {...props} />
+      <Toast {...alert} />
+    </>
+  )
 }
