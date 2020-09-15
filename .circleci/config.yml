@@ -1,0 +1,98 @@
+executors:
+  default:
+    working_directory: ~/repo
+    docker:
+    - image: circleci/node:14.7.0
+
+commands:
+  resources_cache:
+    description: ソースコードとnode_modulesを復元
+    steps:
+    - restore_cache:
+        name: ソースコードを復元
+        key: v1-repo-{{.Environment.CIRCLE_SHA1}}
+    - restore_cache:
+        name: node_modulesを復元
+        key: v1-node-{{checksum "package.json"}}-{{arch}}
+  build_cache:
+    description: ビルドファイルを復元
+    steps:
+    - restore_cache:
+        name: ビルドファイルを復元
+        key: v1-build-{{.Environment.CIRCLE_SHA1}}
+
+version: 2.1
+jobs:
+  checkout_code:
+    executor: default
+    steps:
+    - checkout
+    - save_cache:
+        name: ソースコードをキャッシュ
+        key: v1-repo-{{.Environment.CIRCLE_SHA1}}
+        paths:
+        - ~/repo
+
+  node_dependencies:
+    executor: default
+    steps:
+    - resources_cache
+    - restore_cache:
+        name: Yarnキャッシュを復元
+        key: v1-yarn-{{checksum "yarn.lock"}}-{{arch}}
+    - run:
+        name: Yarn Install
+        command: yarn install
+    - save_cache:
+        name: Yarnキャッシュをキャッシュ
+        key: v1-yarn-{{checksum "yarn.lock"}}-{{arch}}
+        paths:
+        - ~/.cache/yarn
+    - save_cache:
+        name: node_modulesをキャッシュ
+        key: v1-node-{{checksum "package.json"}}-{{arch}}
+        paths:
+        - node_modules
+
+  build:
+    executor: default
+    steps:
+    - resources_cache
+    - run:
+        name: ビルドを実行
+        command: CI=false yarn build
+    - save_cache:
+        name: ビルドファイルをキャッシュ
+        key: v1-build-{{.Environment.CIRCLE_SHA1}}
+        paths:
+        - ~/repo/build
+          
+  deploy:
+    executor: default
+    steps:
+    - build_cache
+    - deploy:
+        name: deploy to Firebase Hosting
+        command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN
+
+workflows:
+  version: 2
+  Workflows:
+    jobs:
+    - checkout_code
+    - node_dependencies:
+        requires:
+        - checkout_code
+    - build:
+        requires:
+        - node_dependencies
+        filters:
+          branches:
+            only:
+            - master
+    - deploy:
+        requires:
+        - build
+        filters:
+          branches:
+            only: master
